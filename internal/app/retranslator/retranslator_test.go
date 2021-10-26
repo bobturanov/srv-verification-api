@@ -69,7 +69,7 @@ func startTest(repo *mocks.MockEventRepo, sender *mocks.MockEventSender) {
 
 	retranslator := NewRetranslator(cfg)
 	retranslator.Start()
-	time.Sleep(3 * time.Second)
+	time.Sleep(time.Second / 4)
 	retranslator.Close()
 }
 
