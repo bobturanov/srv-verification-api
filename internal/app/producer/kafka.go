@@ -16,8 +16,8 @@ type Producer interface {
 }
 
 type producer struct {
-	n       uint64
-	timeout time.Duration
+	producerCount uint64
+	timeout   time.Duration
 
 	sender sender.EventSender
 	events <-chan model.VerificationEvent
@@ -31,7 +31,7 @@ type producer struct {
 }
 
 func NewKafkaProducer(
-	n uint64,
+	producerCount uint64,
 	sender sender.EventSender,
 	repo repo.EventRepo,
 	events <-chan model.VerificationEvent,
@@ -42,7 +42,7 @@ func NewKafkaProducer(
 	done := make(chan bool)
 
 	return &producer{
-		n:          n,
+		producerCount:  producerCount,
 		sender:     sender,
 		repo:       repo,
 		events:     events,
@@ -53,27 +53,14 @@ func NewKafkaProducer(
 }
 
 func (p *producer) Start() {
-	for i := uint64(0); i < p.n; i++ {
+	for i := uint64(0); i < p.producerCount; i++ {
 		p.wg.Add(1)
 		go func() {
 			defer p.wg.Done()
 			for {
 				select {
 				case event := <-p.events:
-					if err := p.sender.Send(&event); err != nil {
-						log.Printf("Error sending Event ID: %d to Kafka", event.ID)
-						p.workerPool.Submit(func() {
-							if err := p.repo.Unlock([]uint64{event.ID}); err != nil {
-								log.Printf("Error unlocking Event ID: %d in DB", event.ID)
-							}
-						})
-					} else {
-						p.workerPool.Submit(func() {
-							if err := p.repo.Remove([]uint64{event.ID}); err != nil {
-								log.Printf("Error removing Event ID: %d", event.ID)
-							}
-						})
-					}
+					p.produceEvent(&event)
 				case <-p.done:
 					return
 				}
@@ -85,4 +72,21 @@ func (p *producer) Start() {
 func (p *producer) Close() {
 	close(p.done)
 	p.wg.Wait()
+}
+
+func (p *producer) produceEvent(event *model.VerificationEvent) {
+	if err := p.sender.Send(event); err != nil {
+		log.Printf("Error sending Event ID: %d to Kafka", event.ID)
+		p.workerPool.Submit(func() {
+			if err := p.repo.Unlock([]uint64{event.ID}); err != nil {
+				log.Printf("Error unlocking Event ID: %d in DB", event.ID)
+			}
+		})
+	} else {
+		p.workerPool.Submit(func() {
+			if err := p.repo.Remove([]uint64{event.ID}); err != nil {
+				log.Printf("Error removing Event ID: %d", event.ID)
+			}
+		})
+	}
 }

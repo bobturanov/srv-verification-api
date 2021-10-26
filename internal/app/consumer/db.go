@@ -55,32 +55,37 @@ func NewDbConsumer(
 func (c *consumer) Start() {
 	for i := uint64(0); i < c.n; i++ {
 		c.wg.Add(1)
-
-		go func() {
-			defer c.wg.Done()
-			ticker := time.NewTicker(c.timeout)
-			for {
-				select {
-				case <-ticker.C:
-					events, err := c.repo.Lock(c.batchSize)
-					if err != nil {
-						continue
-					}
-					unlock := make([]uint64, c.batchSize)
-					for i, event := range events {
-						event.Type = model.Updated
-						unlock[i] = event.ID
-						c.events <- event
-					}
-				case <-c.done:
-					return
-				}
-			}
-		}()
+			go c.processConsumer()
 	}
 }
 
 func (c *consumer) Close() {
 	close(c.done)
 	c.wg.Wait()
+}
+
+func (c *consumer) processConsumer() {
+	defer c.wg.Done()
+	ticker := time.NewTicker(c.timeout)
+	for {
+		select {
+		case <-ticker.C:
+			c.processEvent()
+		case <-c.done:
+			return
+		}
+	}
+}
+
+func (c *consumer) processEvent() {
+	events, err := c.repo.Lock(c.batchSize)
+	if err != nil {
+		return
+	}
+	unlock := make([]uint64, c.batchSize)
+	for i, event := range events {
+		event.Type = model.Updated
+		unlock[i] = event.ID
+		c.events <- event
+	}
 }
