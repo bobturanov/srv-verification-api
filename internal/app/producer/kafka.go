@@ -1,6 +1,7 @@
 package producer
 
 import (
+	"context"
 	"github.com/gammazero/workerpool"
 	"log"
 	"srv-verification-api/internal/app/repo"
@@ -25,7 +26,7 @@ type producer struct {
 	workerPool *workerpool.WorkerPool
 
 	wg   *sync.WaitGroup
-	done chan bool
+	ctx context.Context
 
 	repo repo.EventRepo
 }
@@ -36,10 +37,10 @@ func NewKafkaProducer(
 	repo repo.EventRepo,
 	events <-chan model.VerificationEvent,
 	workerPool *workerpool.WorkerPool,
+	ctx context.Context,
 ) Producer {
 
 	wg := &sync.WaitGroup{}
-	done := make(chan bool)
 
 	return &producer{
 		producerCount:  producerCount,
@@ -48,7 +49,7 @@ func NewKafkaProducer(
 		events:     events,
 		workerPool: workerPool,
 		wg:         wg,
-		done:       done,
+		ctx:        ctx,
 	}
 }
 
@@ -61,7 +62,7 @@ func (p *producer) Start() {
 				select {
 				case event := <-p.events:
 					p.produceEvent(&event)
-				case <-p.done:
+				case <- p.ctx.Done():
 					return
 				}
 			}
@@ -70,7 +71,6 @@ func (p *producer) Start() {
 }
 
 func (p *producer) Close() {
-	close(p.done)
 	p.wg.Wait()
 }
 

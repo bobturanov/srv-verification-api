@@ -1,6 +1,7 @@
 package consumer
 
 import (
+	"context"
 	"srv-verification-api/internal/app/repo"
 	"srv-verification-api/internal/model"
 	"sync"
@@ -19,7 +20,7 @@ type consumer struct {
 	repo repo.EventRepo
 	batchSize uint64
 	timeout   time.Duration
-	done chan bool
+	cxt context.Context
 	wg   *sync.WaitGroup
 }
 
@@ -36,10 +37,9 @@ func NewDbConsumer(
 	batchSize uint64,
 	consumeTimeout time.Duration,
 	repo repo.EventRepo,
-	events chan<- model.VerificationEvent) Consumer {
+	events chan<- model.VerificationEvent, cxt context.Context) Consumer {
 
 	wg := &sync.WaitGroup{}
-	done := make(chan bool)
 
 	return &consumer{
 		n:         n,
@@ -48,7 +48,7 @@ func NewDbConsumer(
 		repo:      repo,
 		events:    events,
 		wg:        wg,
-		done:      done,
+		cxt:      cxt,
 	}
 }
 
@@ -60,7 +60,6 @@ func (c *consumer) Start() {
 }
 
 func (c *consumer) Close() {
-	close(c.done)
 	c.wg.Wait()
 }
 
@@ -71,7 +70,7 @@ func (c *consumer) processConsumer() {
 		select {
 		case <-ticker.C:
 			c.processEvent()
-		case <-c.done:
+		case <-c.cxt.Done():
 			return
 		}
 	}
