@@ -1,7 +1,6 @@
 package retranslator
 
 import (
-	"context"
 	"errors"
 	"github.com/golang/mock/gomock"
 	"srv-verification-api/internal/mocks"
@@ -57,8 +56,6 @@ func TestCaseSendErrorAndRemoveProducer(t *testing.T){
 
 func startTest(repo *mocks.MockEventRepo, sender *mocks.MockEventSender) {
 
-	ctx, _ := context.WithTimeout(context.Background(), time.Second / 4)
-
 	cfg := Config{
 		ChannelSize:   512,
 		ConsumerCount: 2,
@@ -68,11 +65,11 @@ func startTest(repo *mocks.MockEventRepo, sender *mocks.MockEventSender) {
 		WorkerCount:   2,
 		Repo:          repo,
 		Sender:        sender,
-		Ctx:           ctx,
 	}
 
 	retranslator := NewRetranslator(cfg)
 	retranslator.Start()
+	time.Sleep(time.Second / 4)
 	retranslator.Close()
 }
 
