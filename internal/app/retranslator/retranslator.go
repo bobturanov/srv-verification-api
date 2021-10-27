@@ -1,6 +1,7 @@
 package retranslator
 
 import (
+	"context"
 	"github.com/gammazero/workerpool"
 	"srv-verification-api/internal/app/consumer"
 	"srv-verification-api/internal/app/producer"
@@ -11,7 +12,7 @@ import (
 )
 
 type Retranslator interface {
-	Start()
+	Start(ctx context.Context)
 	Close()
 }
 
@@ -34,6 +35,7 @@ type retranslator struct {
 	consumer   consumer.Consumer
 	producer   producer.Producer
 	workerPool *workerpool.WorkerPool
+	cancel     context.CancelFunc
 }
 
 func NewRetranslator(cfg Config) Retranslator {
@@ -61,9 +63,12 @@ func NewRetranslator(cfg Config) Retranslator {
 	}
 }
 
-func (r *retranslator) Start() {
-	r.producer.Start()
-	r.consumer.Start()
+func (r *retranslator) Start(ctx context.Context) {
+	ctx, cancel := context.WithCancel(ctx)
+
+	r.cancel = cancel
+	r.producer.Start(ctx)
+	r.consumer.Start(ctx)
 }
 
 func (r *retranslator) Close() {

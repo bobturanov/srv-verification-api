@@ -1,6 +1,7 @@
 package retranslator
 
 import (
+	"context"
 	"errors"
 	"github.com/golang/mock/gomock"
 	"srv-verification-api/internal/mocks"
@@ -66,9 +67,10 @@ func startTest(repo *mocks.MockEventRepo, sender *mocks.MockEventSender) {
 		Repo:          repo,
 		Sender:        sender,
 	}
+	ctx := context.Background()
 
 	retranslator := NewRetranslator(cfg)
-	retranslator.Start()
+	retranslator.Start(ctx)
 	time.Sleep(time.Second / 4)
 	retranslator.Close()
 }
