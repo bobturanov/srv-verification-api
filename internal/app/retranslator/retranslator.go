@@ -1,7 +1,6 @@
 package retranslator
 
 import (
-	"context"
 	"github.com/gammazero/workerpool"
 	"srv-verification-api/internal/app/consumer"
 	"srv-verification-api/internal/app/producer"
@@ -28,8 +27,6 @@ type Config struct {
 
 	Repo   repo.EventRepo
 	Sender sender.EventSender
-
-	Ctx context.Context
 }
 
 type retranslator struct {
@@ -48,15 +45,13 @@ func NewRetranslator(cfg Config) Retranslator {
 		cfg.ConsumeSize,
 		cfg.ConsumeTimeout,
 		cfg.Repo,
-		events,
-		cfg.Ctx)
+		events)
 	producer := producer.NewKafkaProducer(
 		cfg.ProducerCount,
 		cfg.Sender,
 		cfg.Repo,
 		events,
-		workerPool,
-		cfg.Ctx)
+		workerPool)
 
 	return &retranslator{
 		events:     events,
