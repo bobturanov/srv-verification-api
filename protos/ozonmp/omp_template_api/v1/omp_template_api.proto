@@ -2,8 +2,9 @@ syntax = "proto3";
 
 package ozonmp.omp_template_api.v1;
 
-import "google/api/annotations.proto";
 import "validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/ozonmp/omp-template-api/pkg/omp-template-api;omp_template_api";
 
@@ -21,6 +22,7 @@ service OmpTemplateApiService {
 message Template {
   uint64 id  = 1;
   uint64 foo = 2;
+  google.protobuf.Timestamp created = 3;
 }
 
 message DescribeTemplateV1Request {
