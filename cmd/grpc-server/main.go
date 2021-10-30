@@ -52,7 +52,6 @@ func main() {
 		cfg.Database.SslMode,
 	)
 
-	var err error
 	db, err := database.NewPostgres(dsn, cfg.Database.Driver)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed init postgres")
@@ -60,7 +59,7 @@ func main() {
 	defer db.Close()
 
 	if *migration {
-		if err := goose.Up(db.DB, cfg.Database.Migrations); err != nil {
+		if err = goose.Up(db.DB, cfg.Database.Migrations); err != nil {
 			log.Error().Err(err).Msg("Migration failed")
 
 			return
