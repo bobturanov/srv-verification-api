@@ -1,6 +1,6 @@
 package repo
 
-import "srv-verification-api/internal/model"
+import "github.com/ozonmp/srv-verification-api/internal/model"
 
 type EventRepo interface {
 	Lock(n uint64) ([]model.VerificationEvent, error)

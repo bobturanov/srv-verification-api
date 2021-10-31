@@ -1,7 +1,7 @@
 package sender
 
 import (
-	"srv-verification-api/internal/model"
+	"github.com/ozonmp/srv-verification-api/internal/model"
 )
 
 type EventSender interface {

@@ -3,11 +3,11 @@ package retranslator
 import (
 	"context"
 	"github.com/gammazero/workerpool"
-	"srv-verification-api/internal/app/consumer"
-	"srv-verification-api/internal/app/producer"
-	"srv-verification-api/internal/app/repo"
-	"srv-verification-api/internal/app/sender"
-	"srv-verification-api/internal/model"
+	"github.com/ozonmp/srv-verification-api/internal/app/consumer"
+	"github.com/ozonmp/srv-verification-api/internal/app/producer"
+	"github.com/ozonmp/srv-verification-api/internal/app/repo"
+	"github.com/ozonmp/srv-verification-api/internal/app/sender"
+	"github.com/ozonmp/srv-verification-api/internal/model"
 	"time"
 )
 

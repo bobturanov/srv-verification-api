@@ -2,8 +2,8 @@ package consumer
 
 import (
 	"context"
-	"srv-verification-api/internal/app/repo"
-	"srv-verification-api/internal/model"
+	"github.com/ozonmp/srv-verification-api/internal/app/repo"
+	"github.com/ozonmp/srv-verification-api/internal/model"
 	"sync"
 	"time"
 

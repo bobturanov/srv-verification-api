@@ -5,12 +5,12 @@ import (
 
 	"github.com/jmoiron/sqlx"
 
-	"github.com/ozonmp/omp-template-api/internal/model"
+	"github.com/ozonmp/srv-verification-api/internal/model"
 )
 
-// Repo is DAO for Template
+// Repo is DAO for Verification
 type Repo interface {
-	DescribeTemplate(ctx context.Context, templateID uint64) (*model.Template, error)
+	DescribeVerification(ctx context.Context, verificationID uint64) (*model.Verification, error)
 }
 
 type repo struct {
@@ -23,6 +23,6 @@ func NewRepo(db *sqlx.DB, batchSize uint) Repo {
 	return &repo{db: db, batchSize: batchSize}
 }
 
-func (r *repo) DescribeTemplate(ctx context.Context, templateID uint64) (*model.Template, error) {
+func (r *repo) DescribeVerification(ctx context.Context, verificationID uint64) (*model.Verification, error) {
 	return nil, nil
 }

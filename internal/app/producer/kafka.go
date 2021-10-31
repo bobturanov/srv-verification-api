@@ -3,10 +3,10 @@ package producer
 import (
 	"context"
 	"github.com/gammazero/workerpool"
+	"github.com/ozonmp/srv-verification-api/internal/app/repo"
+	"github.com/ozonmp/srv-verification-api/internal/app/sender"
+	"github.com/ozonmp/srv-verification-api/internal/model"
 	"log"
-	"srv-verification-api/internal/app/repo"
-	"srv-verification-api/internal/app/sender"
-	"srv-verification-api/internal/model"
 	"sync"
 	"time"
 )

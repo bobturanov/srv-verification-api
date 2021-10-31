@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"github.com/golang/mock/gomock"
-	"srv-verification-api/internal/mocks"
-	"srv-verification-api/internal/model"
+	"github.com/ozonmp/srv-verification-api/internal/mocks"
+	"github.com/ozonmp/srv-verification-api/internal/model"
 	"testing"
 	"time"
 )

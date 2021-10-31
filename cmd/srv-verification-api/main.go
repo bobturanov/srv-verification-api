@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
+	"github.com/ozonmp/srv-verification-api/internal/app/retranslator"
 	"os"
 	"os/signal"
-	"srv-verification-api/internal/app/retranslator"
 	"syscall"
 	"time"
 )

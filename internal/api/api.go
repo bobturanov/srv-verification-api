@@ -10,59 +10,59 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/ozonmp/omp-template-api/internal/repo"
+	"github.com/ozonmp/srv-verification-api/internal/repo"
 
-	pb "github.com/ozonmp/omp-template-api/pkg/omp-template-api"
+	pb "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api"
 )
 
 var (
-	totalTemplateNotFound = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "omp_template_api_template_not_found_total",
-		Help: "Total number of templates that were not found",
+	totalVerificationNotFound = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "srv_verification_api_verification_not_found_total",
+		Help: "Total number of verifications that were not found",
 	})
 )
 
-type templateAPI struct {
-	pb.UnimplementedOmpTemplateApiServiceServer
+type verificationAPI struct {
+	pb.UnimplementedSrvVerificationApiServiceServer
 	repo repo.Repo
 }
 
-// NewTemplateAPI returns api of omp-template-api service
-func NewTemplateAPI(r repo.Repo) pb.OmpTemplateApiServiceServer {
-	return &templateAPI{repo: r}
+// NewVerificationAPI returns api of srv-verification-api service
+func NewVerificationAPI(r repo.Repo) pb.SevVerificationApiServiceServer {
+	return &verificationAPI{repo: r}
 }
 
-func (o *templateAPI) DescribeTemplateV1(
+func (o *verificationAPI) DescribeVerificationV1(
 	ctx context.Context,
-	req *pb.DescribeTemplateV1Request,
-) (*pb.DescribeTemplateV1Response, error) {
+	req *pb.DescribeVerificationV1Request,
+) (*pb.DescribeVerificationV1Response, error) {
 
 	if err := req.Validate(); err != nil {
-		log.Error().Err(err).Msg("DescribeTemplateV1 - invalid argument")
+		log.Error().Err(err).Msg("DescribeVerificationV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	template, err := o.repo.DescribeTemplate(ctx, req.TemplateId)
+	verification, err := o.repo.DescribeVerification(ctx, req.VerificationId)
 	if err != nil {
-		log.Error().Err(err).Msg("DescribeTemplateV1 -- failed")
+		log.Error().Err(err).Msg("DescribeVerificationV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	if template == nil {
-		log.Debug().Uint64("templateId", req.TemplateId).Msg("template not found")
-		totalTemplateNotFound.Inc()
+	if verification == nil {
+		log.Debug().Uint64("verificationId", req.VerificationId).Msg("verification not found")
+		totalVerificationNotFound.Inc()
 
-		return nil, status.Error(codes.NotFound, "template not found")
+		return nil, status.Error(codes.NotFound, "verification not found")
 	}
 
-	log.Debug().Msg("DescribeTemplateV1 - success")
+	log.Debug().Msg("DescribeVerificationV1 - success")
 
-	return &pb.DescribeTemplateV1Response{
-		Value: &pb.Template{
-			Id:  template.ID,
-			Foo: template.Foo,
+	return &pb.DescribeVerificationV1Response{
+		Value: &pb.Verification{
+			Id:  verification.ID,
+			Foo: verification.Foo,
 		},
 	}, nil
 }

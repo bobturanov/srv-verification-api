@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package ozonmp.srv_verification_api.v1;
+
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api;srv_verification_api";
+
+//SrvVerificationApiService - Service for working with verifications
+service SrvVerificationApiService {
+  // DescribeVerificationV1 - Describe a verification
+  rpc DescribeVerificationV1(DescribeVerificationV1Request) returns (DescribeVerificationV1Response) {
+    option (google.api.http) = {
+      get: "/v1/verifications/{verification_id}"
+    };
+  }
+}
+
+message Verification {
+  uint64 id  = 1;
+  uint64 foo = 2;
+  google.protobuf.Timestamp created = 3;
+}
+
+message DescribeVerificationV1Request {
+  uint64 verification_id = 1 [(validate.rules).uint64.gt = 0];
+}
+
+message DescribeVerificationV1Response {
+  Verification value = 1;
+}

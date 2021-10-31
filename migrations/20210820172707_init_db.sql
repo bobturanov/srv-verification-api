@@ -1,8 +1,8 @@
 -- +goose Up
-CREATE TABLE template (
+CREATE TABLE verification (
   id BIGSERIAL PRIMARY KEY,
   foo BIGINT NOT NULL
 );
 
 -- +goose Down
-DROP TABLE template;
+DROP TABLE verification;

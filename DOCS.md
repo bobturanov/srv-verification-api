@@ -1,4 +1,4 @@
-# Ozon Marketplace Template API
+# Ozon Marketplace Verification API
 
 ---
 
@@ -41,9 +41,9 @@ The Swagger UI is an open source project to visually render documentation for an
 - http://localhost:8082
 
 ```sh
-[I] ➜ grpc_cli call localhost:8082 DescribeTemplateV1 "id: 1"
+[I] ➜ grpc_cli call localhost:8082 DescribeVerificationV1 "id: 1"
 connecting to localhost:8082
-Rpc failed with status code 5, error message: template not found
+Rpc failed with status code 5, error message: verification not found
 ```
 
 ### Gateway:
@@ -54,7 +54,7 @@ It reads protobuf service definitions and generates a reverse-proxy server which
 
 ```sh
 [I] ➜ curl -s -X 'POST' \
-  'http://localhost:8080/v1/templates' \
+  'http://localhost:8080/v1/verifications' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -62,7 +62,7 @@ It reads protobuf service definitions and generates a reverse-proxy server which
 }' | jq .
 {
   "code": 5,
-  "message": "template not found",
+  "message": "verification not found",
   "details": []
 }
 ```
@@ -119,7 +119,7 @@ Graylog is a leading centralized log management solution for capturing, storing,
 For the convenience of working with the database, you can use the [pgcli](https://github.com/dbcli/pgcli) utility. Migrations are rolled out when the service starts. migrations are located in the **./migrations** directory and are created using the [goose](https://github.com/pressly/goose) tool.
 
 ```sh
-$ pgcli "postgresql://docker:docker@localhost:5432/omp_template_api"
+$ pgcli "postgresql://docker:docker@localhost:5432/srv_verification_api"
 ```
 
 ### Python client
@@ -129,7 +129,7 @@ $ python -m venv .venv
 $ . .venv/bin/activate
 $ make deps
 $ make generate
-$ cd pypkg/omp-template-api
+$ cd pypkg/srv-verification-api
 $ python setup.py install
 $ cd ../..
 $ docker-compose up -d

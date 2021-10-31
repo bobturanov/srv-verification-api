@@ -7,7 +7,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/uber/jaeger-client-go"
 
-	"github.com/ozonmp/omp-template-api/internal/config"
+	"github.com/ozonmp/srv-verification-api/internal/config"
 
 	jaegercfg "github.com/uber/jaeger-client-go/config"
 )
