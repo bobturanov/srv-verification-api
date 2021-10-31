@@ -28,7 +28,7 @@ type verificationAPI struct {
 }
 
 // NewVerificationAPI returns api of srv-verification-api service
-func NewVerificationAPI(r repo.Repo) pb.SevVerificationApiServiceServer {
+func NewVerificationAPI(r repo.Repo) pb.SrvVerificationApiServiceServer {
 	return &verificationAPI{repo: r}
 }
 
@@ -62,7 +62,7 @@ func (o *verificationAPI) DescribeVerificationV1(
 	return &pb.DescribeVerificationV1Response{
 		Value: &pb.Verification{
 			Id:  verification.ID,
-			Foo: verification.Foo,
+			Name: verification.Name,
 		},
 	}, nil
 }

@@ -20,7 +20,7 @@ service SrvVerificationApiService {
 
 message Verification {
   uint64 id  = 1;
-  uint64 foo = 2;
+  string name = 2;
   google.protobuf.Timestamp created = 3;
 }
 

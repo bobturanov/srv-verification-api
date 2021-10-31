@@ -1,8 +1,8 @@
 package model
 
 type Verification struct {
-	ID uint64
-    Name string
+	ID uint64 `db:"id"`
+    Name string `db:"name"`
 }
 
 type EventType uint8
