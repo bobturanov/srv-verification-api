@@ -20,6 +20,9 @@ const _ = grpc.SupportPackageIsVersion7
 type SrvVerificationApiServiceClient interface {
 	// DescribeVerificationV1 - Describe a verification
 	DescribeVerificationV1(ctx context.Context, in *DescribeVerificationV1Request, opts ...grpc.CallOption) (*DescribeVerificationV1Response, error)
+	CreateVerificationV1(ctx context.Context, in *CreateVerificationV1Request, opts ...grpc.CallOption) (*CreateVerificationV1Response, error)
+	ListVerificationV1(ctx context.Context, in *ListVerificationV1Request, opts ...grpc.CallOption) (*ListVerificationV1Response, error)
+	RemoveVerificationV1(ctx context.Context, in *RemoveVerificationV1Request, opts ...grpc.CallOption) (*RemoveVerificationV1Response, error)
 }
 
 type srvVerificationApiServiceClient struct {
@@ -39,12 +42,42 @@ func (c *srvVerificationApiServiceClient) DescribeVerificationV1(ctx context.Con
 	return out, nil
 }
 
+func (c *srvVerificationApiServiceClient) CreateVerificationV1(ctx context.Context, in *CreateVerificationV1Request, opts ...grpc.CallOption) (*CreateVerificationV1Response, error) {
+	out := new(CreateVerificationV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/CreateVerificationV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *srvVerificationApiServiceClient) ListVerificationV1(ctx context.Context, in *ListVerificationV1Request, opts ...grpc.CallOption) (*ListVerificationV1Response, error) {
+	out := new(ListVerificationV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/ListVerificationV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *srvVerificationApiServiceClient) RemoveVerificationV1(ctx context.Context, in *RemoveVerificationV1Request, opts ...grpc.CallOption) (*RemoveVerificationV1Response, error) {
+	out := new(RemoveVerificationV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/RemoveVerificationV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SrvVerificationApiServiceServer is the server API for SrvVerificationApiService service.
 // All implementations must embed UnimplementedSrvVerificationApiServiceServer
 // for forward compatibility
 type SrvVerificationApiServiceServer interface {
 	// DescribeVerificationV1 - Describe a verification
 	DescribeVerificationV1(context.Context, *DescribeVerificationV1Request) (*DescribeVerificationV1Response, error)
+	CreateVerificationV1(context.Context, *CreateVerificationV1Request) (*CreateVerificationV1Response, error)
+	ListVerificationV1(context.Context, *ListVerificationV1Request) (*ListVerificationV1Response, error)
+	RemoveVerificationV1(context.Context, *RemoveVerificationV1Request) (*RemoveVerificationV1Response, error)
 	mustEmbedUnimplementedSrvVerificationApiServiceServer()
 }
 
@@ -54,6 +87,15 @@ type UnimplementedSrvVerificationApiServiceServer struct {
 
 func (UnimplementedSrvVerificationApiServiceServer) DescribeVerificationV1(context.Context, *DescribeVerificationV1Request) (*DescribeVerificationV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeVerificationV1 not implemented")
+}
+func (UnimplementedSrvVerificationApiServiceServer) CreateVerificationV1(context.Context, *CreateVerificationV1Request) (*CreateVerificationV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateVerificationV1 not implemented")
+}
+func (UnimplementedSrvVerificationApiServiceServer) ListVerificationV1(context.Context, *ListVerificationV1Request) (*ListVerificationV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListVerificationV1 not implemented")
+}
+func (UnimplementedSrvVerificationApiServiceServer) RemoveVerificationV1(context.Context, *RemoveVerificationV1Request) (*RemoveVerificationV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveVerificationV1 not implemented")
 }
 func (UnimplementedSrvVerificationApiServiceServer) mustEmbedUnimplementedSrvVerificationApiServiceServer() {
 }
@@ -87,6 +129,60 @@ func _SrvVerificationApiService_DescribeVerificationV1_Handler(srv interface{}, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SrvVerificationApiService_CreateVerificationV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateVerificationV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvVerificationApiServiceServer).CreateVerificationV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/CreateVerificationV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvVerificationApiServiceServer).CreateVerificationV1(ctx, req.(*CreateVerificationV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SrvVerificationApiService_ListVerificationV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListVerificationV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvVerificationApiServiceServer).ListVerificationV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/ListVerificationV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvVerificationApiServiceServer).ListVerificationV1(ctx, req.(*ListVerificationV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SrvVerificationApiService_RemoveVerificationV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveVerificationV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvVerificationApiServiceServer).RemoveVerificationV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/RemoveVerificationV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvVerificationApiServiceServer).RemoveVerificationV1(ctx, req.(*RemoveVerificationV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SrvVerificationApiService_ServiceDesc is the grpc.ServiceDesc for SrvVerificationApiService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -97,6 +193,18 @@ var SrvVerificationApiService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DescribeVerificationV1",
 			Handler:    _SrvVerificationApiService_DescribeVerificationV1_Handler,
+		},
+		{
+			MethodName: "CreateVerificationV1",
+			Handler:    _SrvVerificationApiService_CreateVerificationV1_Handler,
+		},
+		{
+			MethodName: "ListVerificationV1",
+			Handler:    _SrvVerificationApiService_ListVerificationV1_Handler,
+		},
+		{
+			MethodName: "RemoveVerificationV1",
+			Handler:    _SrvVerificationApiService_RemoveVerificationV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

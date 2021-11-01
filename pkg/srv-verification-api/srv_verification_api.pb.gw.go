@@ -83,6 +83,110 @@ func local_request_SrvVerificationApiService_DescribeVerificationV1_0(ctx contex
 
 }
 
+func request_SrvVerificationApiService_CreateVerificationV1_0(ctx context.Context, marshaler runtime.Marshaler, client SrvVerificationApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateVerificationV1Request
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.CreateVerificationV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_SrvVerificationApiService_CreateVerificationV1_0(ctx context.Context, marshaler runtime.Marshaler, server SrvVerificationApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateVerificationV1Request
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.CreateVerificationV1(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_SrvVerificationApiService_ListVerificationV1_0(ctx context.Context, marshaler runtime.Marshaler, client SrvVerificationApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListVerificationV1Request
+	var metadata runtime.ServerMetadata
+
+	msg, err := client.ListVerificationV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_SrvVerificationApiService_ListVerificationV1_0(ctx context.Context, marshaler runtime.Marshaler, server SrvVerificationApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListVerificationV1Request
+	var metadata runtime.ServerMetadata
+
+	msg, err := server.ListVerificationV1(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_SrvVerificationApiService_RemoveVerificationV1_0(ctx context.Context, marshaler runtime.Marshaler, client SrvVerificationApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RemoveVerificationV1Request
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["verification_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "verification_id")
+	}
+
+	protoReq.VerificationId, err = runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "verification_id", err)
+	}
+
+	msg, err := client.RemoveVerificationV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_SrvVerificationApiService_RemoveVerificationV1_0(ctx context.Context, marshaler runtime.Marshaler, server SrvVerificationApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RemoveVerificationV1Request
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["verification_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "verification_id")
+	}
+
+	protoReq.VerificationId, err = runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "verification_id", err)
+	}
+
+	msg, err := server.RemoveVerificationV1(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
 // RegisterSrvVerificationApiServiceHandlerServer registers the http handlers for service SrvVerificationApiService to "mux".
 // UnaryRPC     :call SrvVerificationApiServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
@@ -109,6 +213,75 @@ func RegisterSrvVerificationApiServiceHandlerServer(ctx context.Context, mux *ru
 		}
 
 		forward_SrvVerificationApiService_DescribeVerificationV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_SrvVerificationApiService_CreateVerificationV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/CreateVerificationV1", runtime.WithHTTPPathPattern("/v1/verifications/create"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_SrvVerificationApiService_CreateVerificationV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_SrvVerificationApiService_CreateVerificationV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_SrvVerificationApiService_ListVerificationV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/ListVerificationV1", runtime.WithHTTPPathPattern("/v1/verifications/list"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_SrvVerificationApiService_ListVerificationV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_SrvVerificationApiService_ListVerificationV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_SrvVerificationApiService_RemoveVerificationV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/RemoveVerificationV1", runtime.WithHTTPPathPattern("/v1/verifications/remove/{verification_id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_SrvVerificationApiService_RemoveVerificationV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_SrvVerificationApiService_RemoveVerificationV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -173,13 +346,85 @@ func RegisterSrvVerificationApiServiceHandlerClient(ctx context.Context, mux *ru
 
 	})
 
+	mux.Handle("POST", pattern_SrvVerificationApiService_CreateVerificationV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/CreateVerificationV1", runtime.WithHTTPPathPattern("/v1/verifications/create"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_SrvVerificationApiService_CreateVerificationV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_SrvVerificationApiService_CreateVerificationV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_SrvVerificationApiService_ListVerificationV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/ListVerificationV1", runtime.WithHTTPPathPattern("/v1/verifications/list"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_SrvVerificationApiService_ListVerificationV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_SrvVerificationApiService_ListVerificationV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_SrvVerificationApiService_RemoveVerificationV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/RemoveVerificationV1", runtime.WithHTTPPathPattern("/v1/verifications/remove/{verification_id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_SrvVerificationApiService_RemoveVerificationV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_SrvVerificationApiService_RemoveVerificationV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	return nil
 }
 
 var (
 	pattern_SrvVerificationApiService_DescribeVerificationV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "verifications", "verification_id"}, ""))
+
+	pattern_SrvVerificationApiService_CreateVerificationV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "verifications", "create"}, ""))
+
+	pattern_SrvVerificationApiService_ListVerificationV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "verifications", "list"}, ""))
+
+	pattern_SrvVerificationApiService_RemoveVerificationV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "verifications", "remove", "verification_id"}, ""))
 )
 
 var (
 	forward_SrvVerificationApiService_DescribeVerificationV1_0 = runtime.ForwardResponseMessage
+
+	forward_SrvVerificationApiService_CreateVerificationV1_0 = runtime.ForwardResponseMessage
+
+	forward_SrvVerificationApiService_ListVerificationV1_0 = runtime.ForwardResponseMessage
+
+	forward_SrvVerificationApiService_RemoveVerificationV1_0 = runtime.ForwardResponseMessage
 )

@@ -45,16 +45,6 @@ func (m *Verification) Validate() error {
 
 	// no validation rules for Name
 
-	if v, ok := interface{}(m.GetCreated()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return VerificationValidationError{
-				field:  "Created",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	return nil
 }
 
@@ -264,3 +254,447 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DescribeVerificationV1ResponseValidationError{}
+
+// Validate checks the field values on CreateVerificationV1Request with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateVerificationV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetVerificationName()) < 2 {
+		return CreateVerificationV1RequestValidationError{
+			field:  "VerificationName",
+			reason: "value length must be at least 2 runes",
+		}
+	}
+
+	return nil
+}
+
+// CreateVerificationV1RequestValidationError is the validation error returned
+// by CreateVerificationV1Request.Validate if the designated constraints
+// aren't met.
+type CreateVerificationV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateVerificationV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateVerificationV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateVerificationV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateVerificationV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateVerificationV1RequestValidationError) ErrorName() string {
+	return "CreateVerificationV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateVerificationV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateVerificationV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateVerificationV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateVerificationV1RequestValidationError{}
+
+// Validate checks the field values on CreateVerificationV1Response with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateVerificationV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetVerificationId() <= 0 {
+		return CreateVerificationV1ResponseValidationError{
+			field:  "VerificationId",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	return nil
+}
+
+// CreateVerificationV1ResponseValidationError is the validation error returned
+// by CreateVerificationV1Response.Validate if the designated constraints
+// aren't met.
+type CreateVerificationV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateVerificationV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateVerificationV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateVerificationV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateVerificationV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateVerificationV1ResponseValidationError) ErrorName() string {
+	return "CreateVerificationV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateVerificationV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateVerificationV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateVerificationV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateVerificationV1ResponseValidationError{}
+
+// Validate checks the field values on ListVerificationV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ListVerificationV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// ListVerificationV1RequestValidationError is the validation error returned by
+// ListVerificationV1Request.Validate if the designated constraints aren't met.
+type ListVerificationV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListVerificationV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListVerificationV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListVerificationV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListVerificationV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListVerificationV1RequestValidationError) ErrorName() string {
+	return "ListVerificationV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListVerificationV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListVerificationV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListVerificationV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListVerificationV1RequestValidationError{}
+
+// Validate checks the field values on ListVerificationV1Response with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ListVerificationV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetVerification() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListVerificationV1ResponseValidationError{
+					field:  fmt.Sprintf("Verification[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ListVerificationV1ResponseValidationError is the validation error returned
+// by ListVerificationV1Response.Validate if the designated constraints aren't met.
+type ListVerificationV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListVerificationV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListVerificationV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListVerificationV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListVerificationV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListVerificationV1ResponseValidationError) ErrorName() string {
+	return "ListVerificationV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListVerificationV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListVerificationV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListVerificationV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListVerificationV1ResponseValidationError{}
+
+// Validate checks the field values on RemoveVerificationV1Request with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RemoveVerificationV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetVerificationId() <= 0 {
+		return RemoveVerificationV1RequestValidationError{
+			field:  "VerificationId",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	return nil
+}
+
+// RemoveVerificationV1RequestValidationError is the validation error returned
+// by RemoveVerificationV1Request.Validate if the designated constraints
+// aren't met.
+type RemoveVerificationV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveVerificationV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveVerificationV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveVerificationV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveVerificationV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveVerificationV1RequestValidationError) ErrorName() string {
+	return "RemoveVerificationV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemoveVerificationV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveVerificationV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveVerificationV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveVerificationV1RequestValidationError{}
+
+// Validate checks the field values on RemoveVerificationV1Response with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RemoveVerificationV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Result
+
+	return nil
+}
+
+// RemoveVerificationV1ResponseValidationError is the validation error returned
+// by RemoveVerificationV1Response.Validate if the designated constraints
+// aren't met.
+type RemoveVerificationV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveVerificationV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveVerificationV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveVerificationV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveVerificationV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveVerificationV1ResponseValidationError) ErrorName() string {
+	return "RemoveVerificationV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemoveVerificationV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveVerificationV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveVerificationV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveVerificationV1ResponseValidationError{}

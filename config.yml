@@ -22,7 +22,7 @@ metrics:
 jaeger:
   service: "srv-verification-api"
   host: "jaeger"
-  port: ":6831"
+  port: ":6832"
 
 status:
   host: 0.0.0.0

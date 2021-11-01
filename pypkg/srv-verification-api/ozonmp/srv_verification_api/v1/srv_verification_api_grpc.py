@@ -21,6 +21,18 @@ class SrvVerificationApiServiceBase(abc.ABC):
     async def DescribeVerificationV1(self, stream: 'grpclib.server.Stream[ozonmp.srv_verification_api.v1.srv_verification_api_pb2.DescribeVerificationV1Request, ozonmp.srv_verification_api.v1.srv_verification_api_pb2.DescribeVerificationV1Response]') -> None:
         pass
 
+    @abc.abstractmethod
+    async def CreateVerificationV1(self, stream: 'grpclib.server.Stream[ozonmp.srv_verification_api.v1.srv_verification_api_pb2.CreateVerificationV1Request, ozonmp.srv_verification_api.v1.srv_verification_api_pb2.CreateVerificationV1Response]') -> None:
+        pass
+
+    @abc.abstractmethod
+    async def ListVerificationV1(self, stream: 'grpclib.server.Stream[ozonmp.srv_verification_api.v1.srv_verification_api_pb2.ListVerificationV1Request, ozonmp.srv_verification_api.v1.srv_verification_api_pb2.ListVerificationV1Response]') -> None:
+        pass
+
+    @abc.abstractmethod
+    async def RemoveVerificationV1(self, stream: 'grpclib.server.Stream[ozonmp.srv_verification_api.v1.srv_verification_api_pb2.RemoveVerificationV1Request, ozonmp.srv_verification_api.v1.srv_verification_api_pb2.RemoveVerificationV1Response]') -> None:
+        pass
+
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
         return {
             '/ozonmp.srv_verification_api.v1.SrvVerificationApiService/DescribeVerificationV1': grpclib.const.Handler(
@@ -28,6 +40,24 @@ class SrvVerificationApiServiceBase(abc.ABC):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 ozonmp.srv_verification_api.v1.srv_verification_api_pb2.DescribeVerificationV1Request,
                 ozonmp.srv_verification_api.v1.srv_verification_api_pb2.DescribeVerificationV1Response,
+            ),
+            '/ozonmp.srv_verification_api.v1.SrvVerificationApiService/CreateVerificationV1': grpclib.const.Handler(
+                self.CreateVerificationV1,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                ozonmp.srv_verification_api.v1.srv_verification_api_pb2.CreateVerificationV1Request,
+                ozonmp.srv_verification_api.v1.srv_verification_api_pb2.CreateVerificationV1Response,
+            ),
+            '/ozonmp.srv_verification_api.v1.SrvVerificationApiService/ListVerificationV1': grpclib.const.Handler(
+                self.ListVerificationV1,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                ozonmp.srv_verification_api.v1.srv_verification_api_pb2.ListVerificationV1Request,
+                ozonmp.srv_verification_api.v1.srv_verification_api_pb2.ListVerificationV1Response,
+            ),
+            '/ozonmp.srv_verification_api.v1.SrvVerificationApiService/RemoveVerificationV1': grpclib.const.Handler(
+                self.RemoveVerificationV1,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                ozonmp.srv_verification_api.v1.srv_verification_api_pb2.RemoveVerificationV1Request,
+                ozonmp.srv_verification_api.v1.srv_verification_api_pb2.RemoveVerificationV1Response,
             ),
         }
 
@@ -40,4 +70,22 @@ class SrvVerificationApiServiceStub:
             '/ozonmp.srv_verification_api.v1.SrvVerificationApiService/DescribeVerificationV1',
             ozonmp.srv_verification_api.v1.srv_verification_api_pb2.DescribeVerificationV1Request,
             ozonmp.srv_verification_api.v1.srv_verification_api_pb2.DescribeVerificationV1Response,
+        )
+        self.CreateVerificationV1 = grpclib.client.UnaryUnaryMethod(
+            channel,
+            '/ozonmp.srv_verification_api.v1.SrvVerificationApiService/CreateVerificationV1',
+            ozonmp.srv_verification_api.v1.srv_verification_api_pb2.CreateVerificationV1Request,
+            ozonmp.srv_verification_api.v1.srv_verification_api_pb2.CreateVerificationV1Response,
+        )
+        self.ListVerificationV1 = grpclib.client.UnaryUnaryMethod(
+            channel,
+            '/ozonmp.srv_verification_api.v1.SrvVerificationApiService/ListVerificationV1',
+            ozonmp.srv_verification_api.v1.srv_verification_api_pb2.ListVerificationV1Request,
+            ozonmp.srv_verification_api.v1.srv_verification_api_pb2.ListVerificationV1Response,
+        )
+        self.RemoveVerificationV1 = grpclib.client.UnaryUnaryMethod(
+            channel,
+            '/ozonmp.srv_verification_api.v1.SrvVerificationApiService/RemoveVerificationV1',
+            ozonmp.srv_verification_api.v1.srv_verification_api_pb2.RemoveVerificationV1Request,
+            ozonmp.srv_verification_api.v1.srv_verification_api_pb2.RemoveVerificationV1Response,
         )
