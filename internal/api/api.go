@@ -2,7 +2,7 @@ package api
 
 import (
 	"context"
-
+	"github.com/ozonmp/srv-verification-api/internal/model"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 
@@ -66,3 +66,30 @@ func (o *verificationAPI) DescribeVerificationV1(
 		},
 	}, nil
 }
+
+func (o *verificationAPI) CreateVerificationV1(
+	ctx context.Context,
+	req *pb.CreateVerificationV1Request,
+) (*pb.CreateVerificationV1Response, error) {
+
+	if err := req.Validate(); err != nil {
+		log.Error().Err(err).Msg("CreateVerificationV1 - invalid argument")
+
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	verification := model.Verification{Name: req.VerificationName}
+	if err := o.repo.AddVerification(ctx, &verification); err != nil {
+		log.Error().Err(err).Msg("DescribeVerificationV1 -- failed")
+
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	log.Debug().Msg("CreateVerificationV1 - success")
+
+	return &pb.CreateVerificationV1Response{
+		VerificationId: verification.ID,
+	}, nil
+}
+
+// TODO нужно дописать 2 метода +  разделить по разным файлам имплементацию эндпоинтов
