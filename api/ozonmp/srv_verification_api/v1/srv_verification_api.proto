@@ -4,7 +4,6 @@ package ozonmp.srv_verification_api.v1;
 
 import "validate/validate.proto";
 import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api;srv_verification_api";
 
