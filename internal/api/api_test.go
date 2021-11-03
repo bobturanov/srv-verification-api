@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"errors"
 	"log"
 	"net"
 	"testing"
@@ -36,6 +37,7 @@ func (s *VerificationAPITestSuite) SetupSuite() {
 
 	ctrl := gomock.NewController(s.T())
 	repo := mocks.NewMockRepo(ctrl)
+	repo.EXPECT().AddVerification(gomock.Any(), gomock.Any()).Return(errors.New("method is not implemented"))
 
 	pb.RegisterSrvVerificationApiServiceServer(s.server, NewVerificationAPI(repo))
 	go func() {
@@ -72,8 +74,8 @@ func (s *VerificationAPITestSuite) TestCreateVerification() {
 	s.NotNil(err)
 
 	st, _ := status.FromError(err)
-	s.Equal(codes.InvalidArgument, st.Code())
-	s.Equal("CreateVerificationV1 - invalid argument", st.Message())
+	s.Equal(codes.Internal, st.Code())
+	s.Equal("method is not implemented", st.Message())
 
 }
 
