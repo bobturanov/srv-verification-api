@@ -15,11 +15,11 @@ func main() {
 	ctx := context.Background()
 
 	cfg := retranslator.Config{
-		ChannelSize:   512,
-		ConsumerCount: 2,
-		ConsumeSize:   10,
-		ProducerCount: 28,
-		WorkerCount:   2,
+		ChannelSize:    512,
+		ConsumerCount:  2,
+		ConsumeSize:    10,
+		ProducerCount:  28,
+		WorkerCount:    2,
 		ConsumeTimeout: 10 * time.Second, // to run tests
 	}
 

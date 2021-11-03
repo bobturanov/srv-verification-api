@@ -33,4 +33,3 @@ func (o *verificationAPI) CreateVerificationV1(
 		VerificationId: verification.ID,
 	}, nil
 }
-

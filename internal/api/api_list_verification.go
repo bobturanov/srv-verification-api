@@ -46,4 +46,3 @@ func convertVerificationToPb(verification *model.Verification) *srv_verification
 		Name: verification.Name,
 	}
 }
-

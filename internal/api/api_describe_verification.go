@@ -42,4 +42,3 @@ func (o *verificationAPI) DescribeVerificationV1(
 		},
 	}, nil
 }
-

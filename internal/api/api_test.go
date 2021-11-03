@@ -22,7 +22,6 @@ func initAPI(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	repo := mocks.NewMockRepo(ctrl)
 
-
 	pb.RegisterSrvVerificationApiServiceServer(s, NewVerificationAPI(repo))
 	go func() {
 		if err := s.Serve(lis); err != nil {

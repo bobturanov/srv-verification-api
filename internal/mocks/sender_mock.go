@@ -6,8 +6,8 @@ package mocks
 
 import (
 	gomock "github.com/golang/mock/gomock"
-	reflect "reflect"
 	model "github.com/ozonmp/srv-verification-api/internal/model"
+	reflect "reflect"
 )
 
 // MockEventSender is a mock of EventSender interface
