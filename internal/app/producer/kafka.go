@@ -14,7 +14,7 @@ import (
 type Producer interface {
 	Start(ctx context.Context)
 	Close()
-}	
+}
 
 type producer struct {
 	producerCount uint64

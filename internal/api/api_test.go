@@ -19,6 +19,8 @@ import (
 
 const bufSize = 1024 * 1024
 
+var errNotImplementedMethod = errors.New("method is not implemented")
+
 type VerificationAPITestSuite struct {
 	suite.Suite
 	listener *bufconn.Listener
@@ -37,7 +39,10 @@ func (s *VerificationAPITestSuite) SetupSuite() {
 
 	ctrl := gomock.NewController(s.T())
 	repo := mocks.NewMockRepo(ctrl)
-	repo.EXPECT().AddVerification(gomock.Any(), gomock.Any()).Return(errors.New("method is not implemented"))
+	repo.EXPECT().AddVerification(gomock.Any(), gomock.Any()).Return(errNotImplementedMethod)
+	repo.EXPECT().DescribeVerification(gomock.Any(), gomock.Any()).Return(nil, errNotImplementedMethod)
+	repo.EXPECT().ListVerification(gomock.Any()).Return(nil, errNotImplementedMethod)
+	repo.EXPECT().RemoveVerification(gomock.Any(), gomock.Any()).Return(false, errNotImplementedMethod)
 
 	pb.RegisterSrvVerificationApiServiceServer(s.server, NewVerificationAPI(repo))
 	go func() {
@@ -79,37 +84,44 @@ func (s *VerificationAPITestSuite) TestCreateVerification() {
 
 }
 
+func (s *VerificationAPITestSuite) TestDescribeVerification() {
+	req := &pb.DescribeVerificationV1Request{
+		VerificationId: 2236,
+	}
+	resp, err := s.client.DescribeVerificationV1(context.Background(), req)
+	s.Nil(resp)
+	s.NotNil(err)
+
+	st, _ := status.FromError(err)
+	s.Equal(codes.Internal, st.Code())
+	s.Equal("method is not implemented", st.Message())
+
+}
+
+func (s *VerificationAPITestSuite) TestListeVerification() {
+	req := &pb.ListVerificationV1Request{}
+	resp, err := s.client.ListVerificationV1(context.Background(), req)
+	s.Nil(resp)
+	s.NotNil(err)
+
+	st, _ := status.FromError(err)
+	s.Equal(codes.Internal, st.Code())
+	s.Equal("method is not implemented", st.Message())
+
+}
+
+func (s *VerificationAPITestSuite) TestRemoveVerification() {
+	req := &pb.RemoveVerificationV1Request{VerificationId: 754}
+	resp, err := s.client.RemoveVerificationV1(context.Background(), req)
+	s.Nil(resp)
+	s.NotNil(err)
+
+	st, _ := status.FromError(err)
+	s.Equal(codes.Internal, st.Code())
+	s.Equal("method is not implemented", st.Message())
+
+}
+
 func TestLocationAPI(t *testing.T) {
 	suite.Run(t, new(VerificationAPITestSuite))
 }
-
-//func initAPI(t *testing.T) {
-//	lis = bufconn.Listen(bufSize)
-//	s := grpc.NewServer()
-//	ctrl := gomock.NewController(t)
-//	repo := mocks.NewMockRepo(ctrl)
-//
-//	pb.RegisterSrvVerificationApiServiceServer(s, NewVerificationAPI(repo))
-//	go func() {
-//		if err := s.Serve(lis); err != nil {
-//			log.Fatalf("Server exited with error: %v", err)
-//		}
-//	}()
-//}
-
-//func TestSayHello(t *testing.T) {
-//	initAPI(t)
-//	ctx := context.Background()
-//	conn, err := grpc.DialContext(ctx, "bufnet", grpc.WithContextDialer(bufDialer), grpc.WithInsecure())
-//	if err != nil {
-//		t.Fatalf("Failed to dial bufnet: %v", err)
-//	}
-//	defer conn.Close()
-//	client := pb.NewSrvVerificationApiServiceClient(conn)
-//	resp, err := client.CreateVerificationV1(context.Background(), &pb.CreateVerificationV1Request{VerificationName: "Test"}) //TODO не те методы или не того интерфейса мокаются вроде (?)
-//	if err != nil {
-//		t.Fatalf("SayHello failed: %v", err)
-//	}
-//	log.Printf("Response: %+v", resp)
-//	// Test for output here.
-//}
