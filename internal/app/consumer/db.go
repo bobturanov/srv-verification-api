@@ -2,10 +2,11 @@ package consumer
 
 import (
 	"context"
-	"github.com/ozonmp/srv-verification-api/internal/app/repo"
-	"github.com/ozonmp/srv-verification-api/internal/model"
 	"sync"
 	"time"
+
+	"github.com/ozonmp/srv-verification-api/internal/app/repo"
+	"github.com/ozonmp/srv-verification-api/internal/model"
 )
 
 type Consumer interface {

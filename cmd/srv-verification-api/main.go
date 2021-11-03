@@ -2,11 +2,12 @@ package main
 
 import (
 	"context"
-	"github.com/ozonmp/srv-verification-api/internal/app/retranslator"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/ozonmp/srv-verification-api/internal/app/retranslator"
 )
 
 func main() {

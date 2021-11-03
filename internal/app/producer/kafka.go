@@ -2,13 +2,14 @@ package producer
 
 import (
 	"context"
+	"log"
+	"sync"
+	"time"
+
 	"github.com/gammazero/workerpool"
 	"github.com/ozonmp/srv-verification-api/internal/app/repo"
 	"github.com/ozonmp/srv-verification-api/internal/app/sender"
 	"github.com/ozonmp/srv-verification-api/internal/model"
-	"log"
-	"sync"
-	"time"
 )
 
 type Producer interface {

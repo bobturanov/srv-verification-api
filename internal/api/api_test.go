@@ -2,14 +2,15 @@ package api
 
 import (
 	"context"
+	"log"
+	"net"
+	"testing"
+
 	"github.com/golang/mock/gomock"
 	"github.com/ozonmp/srv-verification-api/internal/mocks"
 	pb "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/test/bufconn"
-	"log"
-	"net"
-	"testing"
 )
 
 const bufSize = 1024 * 1024

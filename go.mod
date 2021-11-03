@@ -19,6 +19,7 @@ require (
 	github.com/rs/zerolog v1.24.0
 	github.com/uber/jaeger-client-go v2.29.1+incompatible
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
+	golang.org/x/tools v0.1.7 // indirect
 	google.golang.org/grpc v1.41.0
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )

@@ -2,7 +2,8 @@ package api
 
 import (
 	"context"
-	"github.com/ozonmp/srv-verification-api/pkg/srv-verification-api"
+
+	pb "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -10,8 +11,8 @@ import (
 
 func (o *verificationAPI) DescribeVerificationV1(
 	ctx context.Context,
-	req *srv_verification_api.DescribeVerificationV1Request,
-) (*srv_verification_api.DescribeVerificationV1Response, error) {
+	req *pb.DescribeVerificationV1Request,
+) (*pb.DescribeVerificationV1Response, error) {
 
 	if err := req.Validate(); err != nil {
 		log.Error().Err(err).Msg("DescribeVerificationV1 - invalid argument")
@@ -35,8 +36,8 @@ func (o *verificationAPI) DescribeVerificationV1(
 
 	log.Debug().Msg("DescribeVerificationV1 - success")
 
-	return &srv_verification_api.DescribeVerificationV1Response{
-		Value: &srv_verification_api.Verification{
+	return &pb.DescribeVerificationV1Response{
+		Value: &pb.Verification{
 			Id:   verification.ID,
 			Name: verification.Name,
 		},

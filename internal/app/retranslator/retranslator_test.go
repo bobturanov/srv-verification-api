@@ -3,11 +3,12 @@ package retranslator
 import (
 	"context"
 	"errors"
+	"testing"
+	"time"
+
 	"github.com/golang/mock/gomock"
 	"github.com/ozonmp/srv-verification-api/internal/mocks"
 	"github.com/ozonmp/srv-verification-api/internal/model"
-	"testing"
-	"time"
 )
 
 var eventData = []model.VerificationEvent{

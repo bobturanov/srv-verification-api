@@ -2,13 +2,14 @@ package retranslator
 
 import (
 	"context"
+	"time"
+
 	"github.com/gammazero/workerpool"
 	"github.com/ozonmp/srv-verification-api/internal/app/consumer"
 	"github.com/ozonmp/srv-verification-api/internal/app/producer"
 	"github.com/ozonmp/srv-verification-api/internal/app/repo"
 	"github.com/ozonmp/srv-verification-api/internal/app/sender"
 	"github.com/ozonmp/srv-verification-api/internal/model"
-	"time"
 )
 
 type Retranslator interface {
