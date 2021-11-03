@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: grpc-srv-verification-api
+Version: 1.0.0
+Summary: GRPC python client for srv-verification-api
+Home-page: https://github.com/ozonmp/srv-verification-api
+Author: rusdevop
+Author-email: bobturanov@gmail.com
+License: None
+Platform: UNKNOWN
+Requires-Python: >=3.5
+
+UNKNOWN
+
