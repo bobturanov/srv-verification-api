@@ -4,7 +4,6 @@ import (
 	"context"
 	"log"
 	"sync"
-	"time"
 
 	"github.com/gammazero/workerpool"
 	"github.com/ozonmp/srv-verification-api/internal/app/repo"
@@ -15,11 +14,11 @@ import (
 type Producer interface {
 	Start(ctx context.Context)
 	Close()
-}
+}	
 
 type producer struct {
 	producerCount uint64
-	timeout       time.Duration
+	//timeout       time.Duration
 
 	sender sender.EventSender
 	events <-chan model.VerificationEvent

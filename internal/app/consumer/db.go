@@ -23,13 +23,13 @@ type consumer struct {
 	wg        *sync.WaitGroup
 }
 
-type Config struct {
-	n         uint64
-	events    chan<- model.VerificationEvent
-	repo      repo.EventRepo
-	batchSize uint64
-	timeout   time.Duration
-}
+//type Config struct {
+//	n         uint64
+//	events    chan<- model.VerificationEvent
+//	repo      repo.EventRepo
+//	batchSize uint64
+//	timeout   time.Duration
+//}
 
 func NewDbConsumer(
 	n uint64,
