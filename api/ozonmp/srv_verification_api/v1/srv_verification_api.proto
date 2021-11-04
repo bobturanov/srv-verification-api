@@ -4,7 +4,6 @@ package ozonmp.srv_verification_api.v1;
 
 import "validate/validate.proto";
 import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api;srv_verification_api";
 
@@ -16,12 +15,27 @@ service SrvVerificationApiService {
       get: "/v1/verifications/{verification_id}"
     };
   }
+  rpc CreateVerificationV1(CreateVerificationV1Request) returns (CreateVerificationV1Response) {
+    option (google.api.http) = {
+      post: "/v1/verifications/create"
+      body: "*"
+    };
+  }
+  rpc ListVerificationV1(ListVerificationV1Request) returns (ListVerificationV1Response) {
+    option (google.api.http) = {
+      get: "/v1/verifications/list"
+    };
+  }
+  rpc RemoveVerificationV1(RemoveVerificationV1Request) returns (RemoveVerificationV1Response) {
+    option (google.api.http) = {
+      delete: "/v1/verifications/remove/{verification_id}"
+    };
+  }
 }
 
 message Verification {
   uint64 id  = 1;
-  uint64 foo = 2;
-  google.protobuf.Timestamp created = 3;
+  string name = 2;
 }
 
 message DescribeVerificationV1Request {
@@ -31,3 +45,27 @@ message DescribeVerificationV1Request {
 message DescribeVerificationV1Response {
   Verification value = 1;
 }
+
+message CreateVerificationV1Request {
+  string verification_name = 2 [(validate.rules).string.min_len = 2];
+}
+
+message CreateVerificationV1Response {
+  uint64 verification_id = 1 [(validate.rules).uint64.gt = 0];
+}
+
+message ListVerificationV1Request {
+}
+
+message ListVerificationV1Response {
+  repeated Verification verification = 1;
+}
+
+message RemoveVerificationV1Request {
+  uint64 verification_id = 1 [(validate.rules).uint64.gt = 0];
+}
+
+message RemoveVerificationV1Response {
+  bool result = 1;
+}
+

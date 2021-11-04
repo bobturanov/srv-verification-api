@@ -2,13 +2,13 @@ package producer
 
 import (
 	"context"
+	"log"
+	"sync"
+
 	"github.com/gammazero/workerpool"
 	"github.com/ozonmp/srv-verification-api/internal/app/repo"
 	"github.com/ozonmp/srv-verification-api/internal/app/sender"
 	"github.com/ozonmp/srv-verification-api/internal/model"
-	"log"
-	"sync"
-	"time"
 )
 
 type Producer interface {
@@ -18,7 +18,7 @@ type Producer interface {
 
 type producer struct {
 	producerCount uint64
-	timeout   time.Duration
+	//timeout       time.Duration
 
 	sender sender.EventSender
 	events <-chan model.VerificationEvent
@@ -40,12 +40,12 @@ func NewKafkaProducer(
 	wg := &sync.WaitGroup{}
 
 	return &producer{
-		producerCount:  producerCount,
-		sender:     sender,
-		repo:       repo,
-		events:     events,
-		workerPool: workerPool,
-		wg:         wg,
+		producerCount: producerCount,
+		sender:        sender,
+		repo:          repo,
+		events:        events,
+		workerPool:    workerPool,
+		wg:            wg,
 	}
 }
 

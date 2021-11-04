@@ -2,11 +2,11 @@ package consumer
 
 import (
 	"context"
-	"github.com/ozonmp/srv-verification-api/internal/app/repo"
-	"github.com/ozonmp/srv-verification-api/internal/model"
 	"sync"
 	"time"
 
+	"github.com/ozonmp/srv-verification-api/internal/app/repo"
+	"github.com/ozonmp/srv-verification-api/internal/model"
 )
 
 type Consumer interface {
@@ -15,21 +15,21 @@ type Consumer interface {
 }
 
 type consumer struct {
-	n      uint64
-	events chan<- model.VerificationEvent
-	repo repo.EventRepo
-	batchSize uint64
-	timeout   time.Duration
-	wg   *sync.WaitGroup
-}
-
-type Config struct {
 	n         uint64
 	events    chan<- model.VerificationEvent
 	repo      repo.EventRepo
 	batchSize uint64
 	timeout   time.Duration
+	wg        *sync.WaitGroup
 }
+
+//type Config struct {
+//	n         uint64
+//	events    chan<- model.VerificationEvent
+//	repo      repo.EventRepo
+//	batchSize uint64
+//	timeout   time.Duration
+//}
 
 func NewDbConsumer(
 	n uint64,
@@ -53,7 +53,7 @@ func NewDbConsumer(
 func (c *consumer) Start(ctx context.Context) {
 	for i := uint64(0); i < c.n; i++ {
 		c.wg.Add(1)
-			go c.processConsumer(ctx)
+		go c.processConsumer(ctx)
 	}
 }
 

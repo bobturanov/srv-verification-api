@@ -2,11 +2,12 @@ package main
 
 import (
 	"context"
-	"github.com/ozonmp/srv-verification-api/internal/app/retranslator"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/ozonmp/srv-verification-api/internal/app/retranslator"
 )
 
 func main() {
@@ -15,11 +16,11 @@ func main() {
 	ctx := context.Background()
 
 	cfg := retranslator.Config{
-		ChannelSize:   512,
-		ConsumerCount: 2,
-		ConsumeSize:   10,
-		ProducerCount: 28,
-		WorkerCount:   2,
+		ChannelSize:    512,
+		ConsumerCount:  2,
+		ConsumeSize:    10,
+		ProducerCount:  28,
+		WorkerCount:    2,
 		ConsumeTimeout: 10 * time.Second, // to run tests
 	}
 

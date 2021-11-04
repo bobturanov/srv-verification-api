@@ -1,8 +1,8 @@
 package model
 
 type Verification struct {
-	ID uint64
-    Name string
+	ID   uint64 `db:"id"`
+	Name string `db:"name"`
 }
 
 type EventType uint8
@@ -25,19 +25,19 @@ type VerificationEvent struct {
 	Entity *Verification
 }
 
-func (s * VerificationEvent) Lock(batchSize uint64) ([]VerificationEvent, error){
+func (s *VerificationEvent) Lock(batchSize uint64) ([]VerificationEvent, error) {
 	events := make([]VerificationEvent, batchSize)
 	return events, nil
 }
 
-func (s * VerificationEvent) Unlock(eventsID []uint64) error{
+func (s *VerificationEvent) Unlock(eventsID []uint64) error {
 	return nil
 }
 
-func (s * VerificationEvent) Add(event []VerificationEvent) error{
+func (s *VerificationEvent) Add(event []VerificationEvent) error {
 	return nil
 }
 
-func (s * VerificationEvent) Remove(eventsID []uint64) error{
+func (s *VerificationEvent) Remove(eventsID []uint64) error {
 	return nil
 }
