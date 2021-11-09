@@ -2,12 +2,12 @@ package api
 
 import (
 	"context"
-
 	"github.com/ozonmp/srv-verification-api/internal/model"
 	pb "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func (o *verificationAPI) ListVerificationV1(
@@ -45,5 +45,7 @@ func convertVerificationToPb(verification *model.Verification) *pb.Verification 
 	return &pb.Verification{
 		Id:   verification.ID,
 		Name: verification.Name,
+		CreatedAt: timestamppb.New(verification.CreatedAt),
+		UpdatedAt: timestamppb.New(verification.UpdatedAt),
 	}
 }
