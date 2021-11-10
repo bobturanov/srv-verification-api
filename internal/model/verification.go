@@ -19,16 +19,16 @@ const (
 	Updated EventType = "UPDATED"
 	Removed EventType = "REMOVED"
 
-	Deferred EventStatus = "DEFERRED"
+	Deferred  EventStatus = "DEFERRED"
 	Processed EventStatus = "PROCESSED"
 )
 
 type VerificationEvent struct {
-	ID     uint64
+	ID             uint64
 	VerificationID uint64
-	Type   EventType
-	Status EventStatus
-	Entity *Verification
+	Type           EventType
+	Status         EventStatus
+	Entity         *Verification
 }
 
 func (s *VerificationEvent) Lock(batchSize uint64) ([]VerificationEvent, error) {

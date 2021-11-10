@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+
 	pb "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"

@@ -67,15 +67,15 @@ func (c *consumer) processConsumer(ctx context.Context) {
 	for {
 		select {
 		case <-ticker.C:
-			c.processEvent()
+			c.processEvent(ctx)
 		case <-ctx.Done():
 			return
 		}
 	}
 }
 
-func (c *consumer) processEvent() {
-	events, err := c.repo.Lock(c.batchSize)
+func (c *consumer) processEvent(ctx context.Context) {
+	events, err := c.repo.Lock(ctx, c.batchSize)
 	if err != nil {
 		return
 	}
