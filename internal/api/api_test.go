@@ -122,6 +122,6 @@ func (s *VerificationAPITestSuite) TestRemoveVerification() {
 
 }
 
-func TestLocationAPI(t *testing.T) {
+func TestVerificationAPI(t *testing.T) {
 	suite.Run(t, new(VerificationAPITestSuite))
 }
