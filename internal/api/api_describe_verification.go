@@ -37,9 +37,7 @@ func (o *verificationAPI) DescribeVerificationV1(
 	log.Debug().Msg("DescribeVerificationV1 - success")
 
 	return &pb.DescribeVerificationV1Response{
-		Value: &pb.Verification{
-			Id:   verification.ID,
-			Name: verification.Name,
+			Value: convertVerificationToPb(verification),
 		},
-	}, nil
+		nil
 }
