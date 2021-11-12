@@ -1,24 +1,34 @@
-Create or replace function random_string(length integer) returns text as
+CREATE OR replace FUNCTION random_string(length INTEGER) returns text
+AS
 $$
-declare
+DECLARE
     chars text[] := '{A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}';
     result text := '';
-    i integer := 0;
-begin
-    if length < 0 then
-        raise exception 'Given length cannot be less than 0';
-    end if;
-    for i in 1..length loop
-            result := result || chars[1+random()*(array_length(chars, 1)-1)];
-        end loop;
-    return result;
-end;
-$$ language plpgsql;
+    i INTEGER := 0;
+BEGIN
+    IF length < 0 THEN
+        RAISE
+            EXCEPTION
+            'Given length cannot be less than 0';
+    END IF;
+    FOR i IN 1..length
+        LOOP
+            result := result
+                || chars[1+random()*(array_length(chars, 1)-1)];
+        END LOOP;
+    RETURN result;
+END;
+$$ LANGUAGE plpgsql;
 
-insert into verification (name, created_at, updated_at, is_removed)
-select
-    random_string( (random() * 4 + 5)::int4),
-    now() - '2 years'::interval * random(),
-    now() - '2 years'::interval * random(),
-    (round(random())::int)::boolean
-from generate_series(1, 10000);
+INSERT INTO verification
+(
+    name,
+    created_at,
+    updated_at,
+    is_removed
+)
+SELECT random_string( (random() * 4 + 5)::int4),
+       now() - '2 years'::interval * random(),
+       now() - '2 years'::interval * random(),
+       (round(random())::INT)::BOOLEAN
+FROM   generate_series(1, 10000);
