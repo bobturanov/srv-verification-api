@@ -53,16 +53,28 @@ func (r *repo) DescribeVerification(ctx context.Context, verificationID uint64) 
 }
 
 func (r *repo) AddVerification(ctx context.Context, verification *model.Verification) error {
+	queryIDSeq, argsIDSeq, errIDSeq := sq.Select("nextval('verification_id_seq')").ToSql()
+
+	if errIDSeq != nil {
+		return errIDSeq
+	}
+
+	err := r.db.QueryRowContext(ctx, queryIDSeq, argsIDSeq...).Scan(&verification.ID)
+
+	if err != nil {
+		return err
+	}
 	query, args, err := sq.Insert("verification").
 		PlaceholderFormat(sq.Dollar).
-		Columns("name", "created_at", "updated_at").
-		Values(verification.Name, verification.CreatedAt, verification.UpdatedAt).
+		Columns("id", "name", "created_at", "updated_at").
+		Values(verification.ID, verification.Name, verification.CreatedAt, verification.UpdatedAt).
 		Suffix("RETURNING id").ToSql()
 
 	if err != nil {
 		return err
 	}
-	err = r.db.QueryRowContext(ctx, query, args...).Scan(&verification.ID)
+
+	_, err = r.db.ExecContext(ctx, query, args...)
 
 	if err != nil {
 		return err
