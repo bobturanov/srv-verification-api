@@ -39,6 +39,7 @@ type retranslator struct {
 	cancel     context.CancelFunc
 }
 
+// NewRetranslator create new retranslator.
 func NewRetranslator(cfg Config) Retranslator {
 	events := make(chan model.VerificationEvent, cfg.ChannelSize)
 	workerPool := workerpool.New(cfg.WorkerCount)
