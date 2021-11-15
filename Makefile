@@ -45,8 +45,7 @@ generate-go: .generate-install-buf .generate-go .generate-finalize-go
 
 .generate-install-buf:
 	@ command -v buf 2>&1 > /dev/null || (echo "Install buf" && \
-    		mkdir -p "$(GO_BIN)" && \
-    		curl -sSL0 https://github.com/bufbuild/buf/releases/download/$(BUF_VERSION)/buf-$(OS_NAME)-$(OS_ARCH)$(shell go env GOEXE) -o "$(BUF_EXE)" && \
+    		curl -sSL0 https://github.com/bufbuild/buf/releases/download/$(BUF_VERSION)/buf-$(OS_NAME)-$(OS_ARCH)$(shell go env GOEXE) --create-dirs -o "$(BUF_EXE)" && \
     		chmod +x "$(BUF_EXE)")
 
 .generate-go:
