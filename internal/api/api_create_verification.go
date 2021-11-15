@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"time"
 
 	"github.com/ozonmp/srv-verification-api/internal/model"
 	pb "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api"
@@ -21,7 +22,7 @@ func (o *verificationAPI) CreateVerificationV1(
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	verification := model.Verification{Name: req.VerificationName}
+	verification := model.Verification{Name: req.VerificationName, CreatedAt: time.Now(), UpdatedAt: time.Now()}
 	if err := o.repo.AddVerification(ctx, &verification); err != nil {
 		log.Error().Err(err).Msg("DescribeVerificationV1 -- failed")
 

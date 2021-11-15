@@ -6,10 +6,9 @@ package mocks
 
 import (
 	context "context"
-	reflect "reflect"
-
 	gomock "github.com/golang/mock/gomock"
 	model "github.com/ozonmp/srv-verification-api/internal/model"
+	reflect "reflect"
 )
 
 // MockRepo is a mock of Repo interface

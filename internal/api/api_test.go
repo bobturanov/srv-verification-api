@@ -33,6 +33,7 @@ func (s *VerificationAPITestSuite) bufDialer(context.Context, string) (net.Conn,
 	return s.listener.Dial()
 }
 
+//nolint
 func (s *VerificationAPITestSuite) SetupSuite() {
 	s.listener = bufconn.Listen(bufSize)
 	s.server = grpc.NewServer()
@@ -70,6 +71,7 @@ func (s *VerificationAPITestSuite) DownSuite() {
 	s.server.Stop()
 }
 
+//nolint
 func (s *VerificationAPITestSuite) TestCreateVerification() {
 	req := &pb.CreateVerificationV1Request{
 		VerificationName: "TestName",
@@ -84,6 +86,7 @@ func (s *VerificationAPITestSuite) TestCreateVerification() {
 
 }
 
+//nolint
 func (s *VerificationAPITestSuite) TestDescribeVerification() {
 	req := &pb.DescribeVerificationV1Request{
 		VerificationId: 2236,
@@ -98,6 +101,7 @@ func (s *VerificationAPITestSuite) TestDescribeVerification() {
 
 }
 
+//nolint
 func (s *VerificationAPITestSuite) TestListeVerification() {
 	req := &pb.ListVerificationV1Request{}
 	resp, err := s.client.ListVerificationV1(context.Background(), req)
@@ -110,6 +114,7 @@ func (s *VerificationAPITestSuite) TestListeVerification() {
 
 }
 
+//nolint
 func (s *VerificationAPITestSuite) TestRemoveVerification() {
 	req := &pb.RemoveVerificationV1Request{VerificationId: 754}
 	resp, err := s.client.RemoveVerificationV1(context.Background(), req)
@@ -122,6 +127,6 @@ func (s *VerificationAPITestSuite) TestRemoveVerification() {
 
 }
 
-func TestLocationAPI(t *testing.T) {
+func TestVerificationAPI(t *testing.T) {
 	suite.Run(t, new(VerificationAPITestSuite))
 }

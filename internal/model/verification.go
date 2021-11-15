@@ -1,28 +1,34 @@
 package model
 
+import "time"
+
 type Verification struct {
-	ID   uint64 `db:"id"`
-	Name string `db:"name"`
+	ID        uint64    `db:"id"`
+	Name      string    `db:"name"`
+	CreatedAt time.Time `db:"created_at"`
+	UpdatedAt time.Time `db:"updated_at"`
+	IsRemoved bool      `db:"is_removed"`
 }
 
-type EventType uint8
+type EventType string
 
-type EventStatus uint8
+type EventStatus string
 
 const (
-	Created EventType = iota
-	Updated
-	Removed
+	Created EventType = "CREATED"
+	Updated EventType = "UPDATED"
+	Removed EventType = "REMOVED"
 
-	Deferred EventStatus = iota
-	Processed
+	Deferred  EventStatus = "DEFERRED"
+	Processed EventStatus = "PROCESSED"
 )
 
 type VerificationEvent struct {
-	ID     uint64
-	Type   EventType
-	Status EventStatus
-	Entity *Verification
+	ID             uint64
+	VerificationID uint64
+	Type           EventType
+	Status         EventStatus
+	Entity         *Verification
 }
 
 func (s *VerificationEvent) Lock(batchSize uint64) ([]VerificationEvent, error) {

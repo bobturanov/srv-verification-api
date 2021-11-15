@@ -57,7 +57,7 @@ func (p *producer) Start(ctx context.Context) {
 			for {
 				select {
 				case event := <-p.events:
-					p.produceEvent(&event)
+					p.produceEvent(ctx, &event)
 				case <-ctx.Done():
 					return
 				}
@@ -70,17 +70,17 @@ func (p *producer) Close() {
 	p.wg.Wait()
 }
 
-func (p *producer) produceEvent(event *model.VerificationEvent) {
+func (p *producer) produceEvent(ctx context.Context, event *model.VerificationEvent) {
 	if err := p.sender.Send(event); err != nil {
 		log.Printf("Error sending Event ID: %d to Kafka", event.ID)
 		p.workerPool.Submit(func() {
-			if err := p.repo.Unlock([]uint64{event.ID}); err != nil {
+			if err := p.repo.Unlock(ctx ,[]uint64{event.ID}); err != nil {
 				log.Printf("Error unlocking Event ID: %d in DB", event.ID)
 			}
 		})
 	} else {
 		p.workerPool.Submit(func() {
-			if err := p.repo.Remove([]uint64{event.ID}); err != nil {
+			if err := p.repo.Remove(ctx, []uint64{event.ID}); err != nil {
 				log.Printf("Error removing Event ID: %d", event.ID)
 			}
 		})

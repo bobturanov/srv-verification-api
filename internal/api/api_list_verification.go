@@ -3,7 +3,6 @@ package api
 import (
 	"context"
 
-	"github.com/ozonmp/srv-verification-api/internal/model"
 	pb "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
@@ -30,7 +29,7 @@ func (o *verificationAPI) ListVerificationV1(
 
 	log.Debug().Msg("ListVerificationV1 - success")
 
-	verificationsPb := make([]*pb.Verification, len(verifications))
+	verificationsPb := make([]*pb.Verification, 0, len(verifications))
 
 	for _, verification := range verifications {
 		verificationsPb = append(verificationsPb, convertVerificationToPb(verification))
@@ -39,11 +38,4 @@ func (o *verificationAPI) ListVerificationV1(
 	return &pb.ListVerificationV1Response{
 		Verification: verificationsPb,
 	}, nil
-}
-
-func convertVerificationToPb(verification *model.Verification) *pb.Verification {
-	return &pb.Verification{
-		Id:   verification.ID,
-		Name: verification.Name,
-	}
 }

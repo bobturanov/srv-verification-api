@@ -1,11 +1,23 @@
 package repo
 
-import "github.com/ozonmp/srv-verification-api/internal/model"
+import (
+	"context"
+
+	"github.com/jmoiron/sqlx"
+	"github.com/ozonmp/srv-verification-api/internal/model"
+)
 
 type EventRepo interface {
-	Lock(n uint64) ([]model.VerificationEvent, error)
-	Unlock(eventIDs []uint64) error
-
-	Add(event []model.VerificationEvent) error
-	Remove(eventIDs []uint64) error
+	Lock(ctx context.Context, n uint64) ([]model.VerificationEvent, error)
+	Unlock(ctx context.Context, eventIDs []uint64) error
+	Add(ctx context.Context, event []model.VerificationEvent) error
+	Remove(ctx context.Context, eventIDs []uint64) error
 }
+type repo struct {
+	db *sqlx.DB
+}
+
+func NewEventRepo(db *sqlx.DB) EventRepo {
+	return &repo{db: db}
+}
+

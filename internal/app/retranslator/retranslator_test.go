@@ -20,6 +20,8 @@ var eventData = []model.VerificationEvent{
 func TestCaseSendAndUnlockProducer(t *testing.T) {
 	t.Parallel()
 
+	ctx := context.Background()
+
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -27,17 +29,19 @@ func TestCaseSendAndUnlockProducer(t *testing.T) {
 	sender := mocks.NewMockEventSender(ctrl)
 
 	gomock.InOrder(
-		repo.EXPECT().Lock(uint64(5)).Return(eventData, nil).MinTimes(1).MaxTimes(1),
+		repo.EXPECT().Lock(ctx, uint64(5)).Return(eventData, nil).MinTimes(1).MaxTimes(1),
 		sender.EXPECT().Send(&eventData[0]).Return(nil).MinTimes(1).MaxTimes(1),
-		repo.EXPECT().Unlock([]uint64{eventData[0].ID}).Return(nil).MinTimes(1).MaxTimes(1),
+		repo.EXPECT().Unlock(ctx, []uint64{eventData[0].ID}).Return(nil).MinTimes(1).MaxTimes(1),
 	)
 
-	startTest(repo, sender)
+	startTest(ctx, repo, sender)
 }
 
 func TestCaseSendErrorAndRemoveProducer(t *testing.T) {
 	t.Parallel()
 
+	ctx := context.Background()
+
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
@@ -45,15 +49,15 @@ func TestCaseSendErrorAndRemoveProducer(t *testing.T) {
 	sender := mocks.NewMockEventSender(ctrl)
 
 	gomock.InOrder(
-		repo.EXPECT().Lock(uint64(10)).Return(eventData, nil).MinTimes(1).MaxTimes(1),
+		repo.EXPECT().Lock(ctx, uint64(10)).Return(eventData, nil).MinTimes(1).MaxTimes(1),
 		sender.EXPECT().Send(&eventData[0]).Return(errors.New("sending is NOT allowed")).MinTimes(1).MaxTimes(1),
-		repo.EXPECT().Remove([]uint64{eventData[0].ID}).Return(nil).MinTimes(1).MaxTimes(1),
+		repo.EXPECT().Remove(ctx, []uint64{eventData[0].ID}).Return(nil).MinTimes(1).MaxTimes(1),
 	)
 
-	startTest(repo, sender)
+	startTest(ctx, repo, sender)
 }
 
-func startTest(repo *mocks.MockEventRepo, sender *mocks.MockEventSender) {
+func startTest(ctx context.Context, repo *mocks.MockEventRepo, sender *mocks.MockEventSender) {
 
 	cfg := Config{
 		ChannelSize:    512,
@@ -65,7 +69,6 @@ func startTest(repo *mocks.MockEventRepo, sender *mocks.MockEventSender) {
 		Repo:           repo,
 		Sender:         sender,
 	}
-	ctx := context.Background()
 
 	retranslator := NewRetranslator(cfg)
 	retranslator.Start(ctx)
