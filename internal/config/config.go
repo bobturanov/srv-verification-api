@@ -91,16 +91,22 @@ type Status struct {
 	ReadinessPath string `yaml:"readinessPath"`
 }
 
+// Telemetry config for Graylog.
+type Telemetry struct {
+	GraylogPath string `yaml:"graylogPath"`
+}
+
 // Config - contains all configuration parameters in config package.
 type Config struct {
-	Project  Project  `yaml:"project"`
-	Grpc     Grpc     `yaml:"grpc"`
-	Rest     Rest     `yaml:"rest"`
-	Database Database `yaml:"database"`
-	Metrics  Metrics  `yaml:"metrics"`
-	Jaeger   Jaeger   `yaml:"jaeger"`
-	Kafka    Kafka    `yaml:"kafka"`
-	Status   Status   `yaml:"status"`
+	Project   Project   `yaml:"project"`
+	Grpc      Grpc      `yaml:"grpc"`
+	Rest      Rest      `yaml:"rest"`
+	Database  Database  `yaml:"database"`
+	Metrics   Metrics   `yaml:"metrics"`
+	Jaeger    Jaeger    `yaml:"jaeger"`
+	Kafka     Kafka     `yaml:"kafka"`
+	Status    Status    `yaml:"status"`
+	Telemetry Telemetry `yaml:"telemetry"`
 }
 
 // ReadConfigYML - read configurations from file and init instance Config.

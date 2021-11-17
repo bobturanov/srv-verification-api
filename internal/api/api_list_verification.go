@@ -3,8 +3,10 @@ package api
 import (
 	"context"
 
+	"github.com/opentracing/opentracing-go"
+	"github.com/ozonmp/srv-verification-api/internal/pkg/logger"
+
 	pb "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api"
-	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -14,20 +16,21 @@ func (o *verificationAPI) ListVerificationV1(
 	req *pb.ListVerificationV1Request,
 ) (*pb.ListVerificationV1Response, error) {
 
-	if err := req.Validate(); err != nil {
-		log.Error().Err(err).Msg("ListVerificationV1 - invalid argument")
+	span, ctx := opentracing.StartSpanFromContext(ctx, "api.ListVerificationV1")
+	defer span.Finish()
 
+	if err := req.Validate(); err != nil {
+		logger.ErrorKV(ctx, "ListVerificationV1 - invalid argument", "err", err)
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
 	verifications, err := o.repo.ListVerification(ctx)
 	if err != nil {
-		log.Error().Err(err).Msg("ListVerificationV1 -- failed")
+		logger.ErrorKV(ctx, "ListVerificationV1 -- failed", "err", err)
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
-
-	log.Debug().Msg("ListVerificationV1 - success")
+	logger.DebugKV(ctx, "ListVerificationV1 - success")
 
 	verificationsPb := make([]*pb.Verification, 0, len(verifications))
 

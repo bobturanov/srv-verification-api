@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"errors"
 
+	"github.com/opentracing/opentracing-go"
+
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 
@@ -33,6 +35,8 @@ func NewRepo(db *sqlx.DB, batchSize uint) Repo {
 }
 
 func (r *repo) DescribeVerification(ctx context.Context, verificationID uint64) (*model.Verification, error) {
+	span := opentracing.SpanFromContext(ctx)
+	span.SetTag("verificationID", verificationID)
 	query, args, err := sq.Select("*").PlaceholderFormat(sq.Dollar).From("verification").Where(sq.Eq{"id": verificationID}).ToSql()
 
 	if err != nil {
@@ -61,6 +65,9 @@ func (r *repo) AddVerification(ctx context.Context, verification *model.Verifica
 
 	err := r.db.QueryRowContext(ctx, queryIDSeq, argsIDSeq...).Scan(&verification.ID)
 
+	span := opentracing.SpanFromContext(ctx)
+	span.SetTag("verificationID", verification.ID)
+
 	if err != nil {
 		return err
 	}
@@ -83,6 +90,8 @@ func (r *repo) AddVerification(ctx context.Context, verification *model.Verifica
 }
 
 func (r *repo) ListVerification(ctx context.Context) ([]*model.Verification, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "repo.ListVerification")
+	defer span.Finish()
 	query, args, err := sq.Select("*").PlaceholderFormat(sq.Dollar).From("verification").ToSql()
 
 	if err != nil {
@@ -103,6 +112,8 @@ func (r *repo) ListVerification(ctx context.Context) ([]*model.Verification, err
 }
 
 func (r *repo) RemoveVerification(ctx context.Context, verificationID uint64) (status bool, err error) {
+	span := opentracing.SpanFromContext(ctx)
+	span.SetTag("verificationID", verificationID)
 	query, args, err := sq.Delete("verification").PlaceholderFormat(sq.Dollar).Where(sq.Eq{"id": verificationID}).ToSql()
 
 	if err != nil {

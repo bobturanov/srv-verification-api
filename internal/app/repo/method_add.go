@@ -2,6 +2,7 @@ package repo
 
 import (
 	"context"
+
 	"github.com/ozonmp/srv-verification-api/internal/model"
 )
 

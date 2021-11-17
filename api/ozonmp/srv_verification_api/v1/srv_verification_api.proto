@@ -14,23 +14,23 @@ service SrvVerificationApiService {
   // DescribeVerificationV1 - Describe a verification
   rpc DescribeVerificationV1(DescribeVerificationV1Request) returns (DescribeVerificationV1Response) {
     option (google.api.http) = {
-      get: "/v1/verifications/{verification_id}"
+      get: "/api/v1/verifications/{verification_id}"
     };
   }
   rpc CreateVerificationV1(CreateVerificationV1Request) returns (CreateVerificationV1Response) {
     option (google.api.http) = {
-      post: "/v1/verifications/create"
+      post: "/api/v1/verifications/create"
       body: "*"
     };
   }
   rpc ListVerificationV1(ListVerificationV1Request) returns (ListVerificationV1Response) {
     option (google.api.http) = {
-      get: "/v1/verifications/list"
+      get: "/api/v1/verifications/list"
     };
   }
   rpc RemoveVerificationV1(RemoveVerificationV1Request) returns (RemoveVerificationV1Response) {
     option (google.api.http) = {
-      delete: "/v1/verifications/remove/{verification_id}"
+      delete: "/api/v1/verifications/remove/{verification_id}"
     };
   }
 }

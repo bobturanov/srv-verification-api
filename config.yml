@@ -33,6 +33,7 @@ status:
 
 database:
   host: postgres
+#  host: localhost
   port: 5432
   user: postgres
   password: postgres
@@ -48,3 +49,6 @@ kafka:
   brokers:
     - "kafka:9092"
     - "localhost:9094"
+
+telemetry:
+  graylogPath: 127.0.0.1:12201

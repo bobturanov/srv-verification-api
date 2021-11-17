@@ -2,20 +2,28 @@ package repo
 
 import (
 	"context"
+
 	"github.com/Masterminds/squirrel"
+	"github.com/opentracing/opentracing-go"
 	"github.com/ozonmp/srv-verification-api/internal/model"
+	"github.com/ozonmp/srv-verification-api/internal/pkg/logger"
 )
 
 func (r repo) Lock(ctx context.Context, n uint64) ([]model.VerificationEvent, error) {
+	spanLock, ctx := opentracing.StartSpanFromContext(ctx, "repo.Lock")
+	defer spanLock.Finish()
+
 	eventIds, err := r.getEventIdsFromDB(ctx, n)
 
 	if err != nil {
+		logger.ErrorKV(ctx, "repo.getEventIdsFromDB() get result query", "err", err)
 		return nil, err
 	}
 
 	eventsData, err := r.getEventsDataFromDB(ctx, err, eventIds)
 
 	if err != nil {
+		logger.ErrorKV(ctx, "repo.getEventsDataFromDB() get result query", "err", err)
 		return nil, err
 	}
 
@@ -97,6 +105,7 @@ func (r repo) getEventIdsFromDB(ctx context.Context, n uint64) ([]uint64, error)
 		ToSql()
 
 	if err != nil {
+		logger.ErrorKV(ctx, "repo.getEventIdsFromDB() get select query", "err", err)
 		return nil, err
 	}
 
@@ -104,8 +113,8 @@ func (r repo) getEventIdsFromDB(ctx context.Context, n uint64) ([]uint64, error)
 	err = r.db.SelectContext(ctx, &eventIds, query, args...)
 
 	if err != nil {
+		logger.ErrorKV(ctx, "repo.getEventIdsFromDB() get result query", "err", err)
 		return nil, err
 	}
 	return eventIds, nil
 }
-

@@ -1,10 +1,13 @@
 package tracer
 
 import (
+	"context"
+	"fmt"
 	"io"
 
+	"github.com/ozonmp/srv-verification-api/internal/pkg/logger"
+
 	"github.com/opentracing/opentracing-go"
-	"github.com/rs/zerolog/log"
 	"github.com/uber/jaeger-client-go"
 
 	"github.com/ozonmp/srv-verification-api/internal/config"
@@ -27,12 +30,10 @@ func NewTracer(cfg *config.Config) (io.Closer, error) {
 	}
 	tracer, closer, err := cfgTracer.NewTracer(jaegercfg.Logger(jaeger.StdLogger))
 	if err != nil {
-		log.Err(err).Msgf("failed init jaeger: %v", err)
-
+		logger.ErrorKV(context.Background(), fmt.Sprintf("failed init jaeger:"), "err", err)
 		return nil, err
 	}
 	opentracing.SetGlobalTracer(tracer)
-	log.Info().Msgf("Traces started")
-
+	logger.InfoKV(context.Background(), "Traces started")
 	return closer, nil
 }

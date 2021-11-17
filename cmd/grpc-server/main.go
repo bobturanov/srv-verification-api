@@ -1,16 +1,17 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
+	"time"
 
-	"github.com/pressly/goose/v3"
-	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
+	"github.com/ozonmp/srv-verification-api/internal/pkg/logger"
 
 	_ "github.com/jackc/pgx/v4"
 	_ "github.com/jackc/pgx/v4/stdlib"
 	_ "github.com/lib/pq"
+	"github.com/pressly/goose/v3"
 
 	"github.com/ozonmp/srv-verification-api/internal/config"
 	"github.com/ozonmp/srv-verification-api/internal/database"
@@ -23,25 +24,28 @@ var (
 )
 
 func main() {
+	ctx := context.Background()
+
 	if err := config.ReadConfigYML("config.yml"); err != nil {
-		log.Fatal().Err(err).Msg("Failed init configuration")
+		logger.FatalKV(ctx, "Failed init configuration", "err", err)
 	}
 	cfg := config.GetConfigInstance()
 
 	migration := flag.Bool("migration", true, "Defines the migration start option")
 	flag.Parse()
 
-	log.Info().
-		Str("version", cfg.Project.Version).
-		Str("commitHash", cfg.Project.CommitHash).
-		Bool("debug", cfg.Project.Debug).
-		Str("environment", cfg.Project.Environment).
-		Msgf("Starting service: %s", cfg.Project.Name)
+	syncLogger := logger.InitLogger(ctx, &cfg)
+	defer syncLogger()
 
-	// default: zerolog.SetGlobalLevel(zerolog.InfoLevel)
-	if cfg.Project.Debug {
-		zerolog.SetGlobalLevel(zerolog.DebugLevel)
-	}
+	logger.InfoKV(ctx, fmt.Sprintf("Starting service: %s", cfg.Project.Name),
+		"version", cfg.Project.Version,
+		"commitHash", cfg.Project.CommitHash,
+		"debug", cfg.Project.Debug,
+		"environment", cfg.Project.Environment,
+	)
+
+	initCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
 
 	dsn := fmt.Sprintf("host=%v port=%v user=%v password=%v dbname=%v sslmode=%v",
 		cfg.Database.Host,
@@ -49,33 +53,30 @@ func main() {
 		cfg.Database.User,
 		cfg.Database.Password,
 		cfg.Database.Name,
-		cfg.Database.SslMode,
-	)
+		cfg.Database.SslMode)
 
-	db, err := database.NewPostgres(dsn, cfg.Database.Driver)
+	db, err := database.NewPostgres(initCtx, dsn, cfg.Database.Driver)
 	if err != nil {
-		log.Fatal().Err(err).Msg("Failed init postgres")
+		logger.FatalKV(ctx, "Failed init postgres", "err", err)
 	}
 	defer db.Close()
 
 	if *migration {
 		if err = goose.Up(db.DB, cfg.Database.Migrations); err != nil {
-			log.Error().Err(err).Msg("Migration failed")
-
+			logger.ErrorKV(ctx, "Migration failed", "err", err)
 			return
 		}
 	}
 
 	tracing, err := tracer.NewTracer(&cfg)
 	if err != nil {
-		log.Error().Err(err).Msg("Failed init tracing")
-
+		logger.ErrorKV(ctx, "Failed init tracing", "err", err)
 		return
 	}
 	defer tracing.Close()
 
 	if err := server.NewGrpcServer(db, batchSize).Start(&cfg); err != nil {
-		log.Error().Err(err).Msg("Failed creating gRPC server")
+		logger.ErrorKV(ctx, "Failed creating gRPC server", "err", err)
 
 		return
 	}

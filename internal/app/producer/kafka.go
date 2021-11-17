@@ -2,8 +2,10 @@ package producer
 
 import (
 	"context"
-	"log"
+	"fmt"
 	"sync"
+
+	"github.com/ozonmp/srv-verification-api/internal/pkg/logger"
 
 	"github.com/gammazero/workerpool"
 	"github.com/ozonmp/srv-verification-api/internal/app/repo"
@@ -72,17 +74,19 @@ func (p *producer) Close() {
 
 func (p *producer) produceEvent(ctx context.Context, event *model.VerificationEvent) {
 	if err := p.sender.Send(event); err != nil {
-		log.Printf("Error sending Event ID: %d to Kafka", event.ID)
+		logger.ErrorKV(ctx, fmt.Sprintf("Error sending Event ID: %d to Kafka", event.ID), "err", err)
 		p.workerPool.Submit(func() {
-			if err := p.repo.Unlock(ctx ,[]uint64{event.ID}); err != nil {
-				log.Printf("Error unlocking Event ID: %d in DB", event.ID)
+			if err := p.repo.Unlock(ctx, []uint64{event.ID}); err != nil {
+				logger.ErrorKV(ctx, fmt.Sprintf("Error unlocking Event ID: %d in DB", event.ID), "err", err)
 			}
+			repo.TotalHandledEvents.Add(1)
 		})
 	} else {
 		p.workerPool.Submit(func() {
 			if err := p.repo.Remove(ctx, []uint64{event.ID}); err != nil {
-				log.Printf("Error removing Event ID: %d", event.ID)
+				logger.ErrorKV(ctx, fmt.Sprintf("Error removing Event ID: %d", event.ID), "err", err)
 			}
 		})
+		repo.TotalHandledEvents.Add(1)
 	}
 }

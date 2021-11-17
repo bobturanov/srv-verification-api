@@ -1,22 +1,23 @@
 package database
 
 import (
-	"github.com/rs/zerolog/log"
+	"context"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/ozonmp/srv-verification-api/internal/pkg/logger"
 )
 
 // NewPostgres returns DB
-func NewPostgres(dsn, driver string) (*sqlx.DB, error) {
+func NewPostgres(ctx context.Context, dsn string, driver string) (*sqlx.DB, error) {
 	db, err := sqlx.Open(driver, dsn)
 	if err != nil {
-		log.Error().Err(err).Msgf("failed to create database connection")
+		logger.ErrorKV(ctx, "Failed to create database connection", "err", err)
 
 		return nil, err
 	}
 
 	if err = db.Ping(); err != nil {
-		log.Error().Err(err).Msgf("failed ping the database")
+		logger.ErrorKV(ctx, "Failed ping the database", "err", err)
 
 		return nil, err
 	}
