@@ -5,13 +5,14 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/ozonmp/srv-verification-api/internal/pkg/logger"
+
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
-	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 
 	pb "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api"
@@ -38,12 +39,12 @@ func createGatewayServer(grpcAddr, gatewayAddr string) *http.Server {
 		grpc.WithInsecure(),
 	)
 	if err != nil {
-		log.Fatal().Err(err).Msg("Failed to dial server")
+		logger.FatalKV(context.Background(), "Failed to dial server", "err", err)
 	}
 
 	mux := runtime.NewServeMux()
 	if err := pb.RegisterSrvVerificationApiServiceHandler(context.Background(), mux, conn); err != nil {
-		log.Fatal().Err(err).Msg("Failed registration handler")
+		logger.FatalKV(context.Background(), "Failed registration handler", "err", err)
 	}
 
 	gatewayServer := &http.Server{

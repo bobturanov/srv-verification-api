@@ -7,6 +7,10 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/ozonmp/srv-verification-api/internal/config"
+	"github.com/ozonmp/srv-verification-api/internal/pkg/logger"
+	"github.com/ozonmp/srv-verification-api/internal/tracer"
+
 	"github.com/ozonmp/srv-verification-api/internal/app/retranslator"
 )
 
@@ -14,6 +18,19 @@ func main() {
 
 	sigs := make(chan os.Signal, 1)
 	ctx := context.Background()
+
+	if err := config.ReadConfigYML("config.yml"); err != nil {
+		logger.FatalKV(ctx, "Failed init configuration", "err", err)
+	}
+
+	cfgInst := config.GetConfigInstance()
+
+	tracing, err := tracer.NewTracer(&cfgInst)
+	if err != nil {
+		logger.ErrorKV(ctx, "Failed init tracing", "err", err)
+		return
+	}
+	defer tracing.Close()
 
 	cfg := retranslator.Config{
 		ChannelSize:    512,
@@ -30,4 +47,6 @@ func main() {
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 
 	<-sigs
+
+	retranslator.Close()
 }

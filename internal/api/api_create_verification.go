@@ -4,9 +4,11 @@ import (
 	"context"
 	"time"
 
+	"github.com/opentracing/opentracing-go"
+	"github.com/ozonmp/srv-verification-api/internal/pkg/logger"
+
 	"github.com/ozonmp/srv-verification-api/internal/model"
 	pb "github.com/ozonmp/srv-verification-api/pkg/srv-verification-api"
-	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -16,20 +18,22 @@ func (o *verificationAPI) CreateVerificationV1(
 	req *pb.CreateVerificationV1Request,
 ) (*pb.CreateVerificationV1Response, error) {
 
+	span, ctx := opentracing.StartSpanFromContext(ctx, "api.CreateVerificationV1")
+	defer span.Finish()
+
 	if err := req.Validate(); err != nil {
-		log.Error().Err(err).Msg("CreateVerificationV1 - invalid argument")
+		logger.ErrorKV(ctx, "CreateVerificationV1 - invalid argument", "err", err)
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
 	verification := model.Verification{Name: req.VerificationName, CreatedAt: time.Now(), UpdatedAt: time.Now()}
 	if err := o.repo.AddVerification(ctx, &verification); err != nil {
-		log.Error().Err(err).Msg("DescribeVerificationV1 -- failed")
+		logger.ErrorKV(ctx, "DescribeVerificationV1 -- failed", "err", err)
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
-
-	log.Debug().Msg("CreateVerificationV1 - success")
+	logger.DebugKV(ctx, "CreateVerificationV1 - success")
 
 	return &pb.CreateVerificationV1Response{
 		VerificationId: verification.ID,

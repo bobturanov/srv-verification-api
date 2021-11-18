@@ -3,6 +3,9 @@ package repo
 import (
 	"context"
 
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
+
 	"github.com/jmoiron/sqlx"
 	"github.com/ozonmp/srv-verification-api/internal/model"
 )
@@ -17,7 +20,7 @@ type repo struct {
 	db *sqlx.DB
 }
 
-func NewEventRepo(db *sqlx.DB) EventRepo {
-	return &repo{db: db}
-}
-
+var TotalHandledEvents = promauto.NewGauge(prometheus.GaugeOpts{
+	Name: "total_handled_events",
+	Help: "Number of handled events in the repeater",
+})

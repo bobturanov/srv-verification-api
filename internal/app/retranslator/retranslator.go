@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/ozonmp/srv-verification-api/internal/pkg/logger"
+
 	"github.com/gammazero/workerpool"
 	"github.com/ozonmp/srv-verification-api/internal/app/consumer"
 	"github.com/ozonmp/srv-verification-api/internal/app/producer"
@@ -66,6 +68,7 @@ func NewRetranslator(cfg Config) Retranslator {
 }
 
 func (r *retranslator) Start(ctx context.Context) {
+	logger.InfoKV(ctx, "Retranslator starts")
 	ctx, cancel := context.WithCancel(ctx)
 
 	r.cancel = cancel
@@ -74,6 +77,7 @@ func (r *retranslator) Start(ctx context.Context) {
 }
 
 func (r *retranslator) Close() {
+	logger.InfoKV(context.Background(), "Retranslator stops")
 	r.cancel()
 	r.consumer.Close()
 	r.producer.Close()
