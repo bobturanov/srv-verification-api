@@ -44,6 +44,7 @@ func (s *VerificationAPITestSuite) SetupSuite() {
 	repo.EXPECT().DescribeVerification(gomock.Any(), gomock.Any()).Return(nil, errNotImplementedMethod)
 	repo.EXPECT().ListVerification(gomock.Any()).Return(nil, errNotImplementedMethod)
 	repo.EXPECT().RemoveVerification(gomock.Any(), gomock.Any()).Return(false, errNotImplementedMethod)
+	repo.EXPECT().UpdateVerification(gomock.Any(), gomock.Any()).Return(false, errNotImplementedMethod)
 
 	pb.RegisterSrvVerificationApiServiceServer(s.server, NewVerificationAPI(repo))
 	go func() {
@@ -124,7 +125,18 @@ func (s *VerificationAPITestSuite) TestRemoveVerification() {
 	st, _ := status.FromError(err)
 	s.Equal(codes.Internal, st.Code())
 	s.Equal("method is not implemented", st.Message())
+}
 
+//nolint
+func (s *VerificationAPITestSuite) TestUpdateVerification() {
+	req := &pb.UpdateVerificationV1Request{VerificationId: 754, Name: "TEST"}
+	resp, err := s.client.UpdateVerificationV1(context.Background(), req)
+	s.Nil(resp)
+	s.NotNil(err)
+
+	st, _ := status.FromError(err)
+	s.Equal(codes.Internal, st.Code())
+	s.Equal("method is not implemented", st.Message())
 }
 
 func TestVerificationAPI(t *testing.T) {

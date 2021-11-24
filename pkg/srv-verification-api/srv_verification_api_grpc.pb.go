@@ -23,6 +23,7 @@ type SrvVerificationApiServiceClient interface {
 	CreateVerificationV1(ctx context.Context, in *CreateVerificationV1Request, opts ...grpc.CallOption) (*CreateVerificationV1Response, error)
 	ListVerificationV1(ctx context.Context, in *ListVerificationV1Request, opts ...grpc.CallOption) (*ListVerificationV1Response, error)
 	RemoveVerificationV1(ctx context.Context, in *RemoveVerificationV1Request, opts ...grpc.CallOption) (*RemoveVerificationV1Response, error)
+	UpdateVerificationV1(ctx context.Context, in *UpdateVerificationV1Request, opts ...grpc.CallOption) (*UpdateVerificationV1Response, error)
 }
 
 type srvVerificationApiServiceClient struct {
@@ -69,6 +70,15 @@ func (c *srvVerificationApiServiceClient) RemoveVerificationV1(ctx context.Conte
 	return out, nil
 }
 
+func (c *srvVerificationApiServiceClient) UpdateVerificationV1(ctx context.Context, in *UpdateVerificationV1Request, opts ...grpc.CallOption) (*UpdateVerificationV1Response, error) {
+	out := new(UpdateVerificationV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/UpdateVerificationV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SrvVerificationApiServiceServer is the server API for SrvVerificationApiService service.
 // All implementations must embed UnimplementedSrvVerificationApiServiceServer
 // for forward compatibility
@@ -78,6 +88,7 @@ type SrvVerificationApiServiceServer interface {
 	CreateVerificationV1(context.Context, *CreateVerificationV1Request) (*CreateVerificationV1Response, error)
 	ListVerificationV1(context.Context, *ListVerificationV1Request) (*ListVerificationV1Response, error)
 	RemoveVerificationV1(context.Context, *RemoveVerificationV1Request) (*RemoveVerificationV1Response, error)
+	UpdateVerificationV1(context.Context, *UpdateVerificationV1Request) (*UpdateVerificationV1Response, error)
 	mustEmbedUnimplementedSrvVerificationApiServiceServer()
 }
 
@@ -96,6 +107,9 @@ func (UnimplementedSrvVerificationApiServiceServer) ListVerificationV1(context.C
 }
 func (UnimplementedSrvVerificationApiServiceServer) RemoveVerificationV1(context.Context, *RemoveVerificationV1Request) (*RemoveVerificationV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveVerificationV1 not implemented")
+}
+func (UnimplementedSrvVerificationApiServiceServer) UpdateVerificationV1(context.Context, *UpdateVerificationV1Request) (*UpdateVerificationV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateVerificationV1 not implemented")
 }
 func (UnimplementedSrvVerificationApiServiceServer) mustEmbedUnimplementedSrvVerificationApiServiceServer() {
 }
@@ -183,6 +197,24 @@ func _SrvVerificationApiService_RemoveVerificationV1_Handler(srv interface{}, ct
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SrvVerificationApiService_UpdateVerificationV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateVerificationV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvVerificationApiServiceServer).UpdateVerificationV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ozonmp.srv_verification_api.v1.SrvVerificationApiService/UpdateVerificationV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvVerificationApiServiceServer).UpdateVerificationV1(ctx, req.(*UpdateVerificationV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SrvVerificationApiService_ServiceDesc is the grpc.ServiceDesc for SrvVerificationApiService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -205,6 +237,10 @@ var SrvVerificationApiService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveVerificationV1",
 			Handler:    _SrvVerificationApiService_RemoveVerificationV1_Handler,
+		},
+		{
+			MethodName: "UpdateVerificationV1",
+			Handler:    _SrvVerificationApiService_UpdateVerificationV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

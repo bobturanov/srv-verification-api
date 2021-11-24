@@ -22,6 +22,7 @@ type Repo interface {
 	AddVerification(ctx context.Context, verification *model.Verification) error
 	ListVerification(ctx context.Context) ([]*model.Verification, error)
 	RemoveVerification(ctx context.Context, verificationID uint64) (status bool, err error)
+	UpdateVerification(ctx context.Context, verification *model.Verification) (status bool, err error)
 }
 
 type repo struct {
@@ -115,6 +116,29 @@ func (r *repo) RemoveVerification(ctx context.Context, verificationID uint64) (s
 	span := opentracing.SpanFromContext(ctx)
 	span.SetTag("verificationID", verificationID)
 	query, args, err := sq.Delete("verification").PlaceholderFormat(sq.Dollar).Where(sq.Eq{"id": verificationID}).ToSql()
+
+	if err != nil {
+		return false, err
+	}
+
+	_, err = r.db.ExecContext(ctx, query, args...)
+
+	switch err {
+	case nil:
+		return true, nil
+	default:
+		return false, errInternalMethod
+	}
+}
+
+func (r *repo) UpdateVerification(ctx context.Context, verification *model.Verification) (status bool, err error) {
+	span := opentracing.SpanFromContext(ctx)
+	span.SetTag("verificationID", verification.ID)
+	query, args, err := sq.Update("verification").
+		PlaceholderFormat(sq.Dollar).
+		Set("name", verification.Name).
+		Set("updated_at", verification.UpdatedAt).
+		Where(sq.Eq{"id": verification.ID}).ToSql()
 
 	if err != nil {
 		return false, err

@@ -20,6 +20,13 @@ type repo struct {
 	db *sqlx.DB
 }
 
+func NewEventRepo(db *sqlx.DB) *repo {
+
+	return &repo{
+		db: db,
+	}
+}
+
 var TotalHandledEvents = promauto.NewGauge(prometheus.GaugeOpts{
 	Name: "total_handled_events",
 	Help: "Number of handled events in the repeater",
