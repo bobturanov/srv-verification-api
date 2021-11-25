@@ -32,3 +32,30 @@ SELECT random_string( (random() * 4 + 5)::int4),
        now() - '2 years'::interval * random(),
        (round(random())::INT)::BOOLEAN
 FROM   generate_series(1, 10000);
+
+
+do
+$do$
+    declare
+        i int;
+        type_str event_type;
+        status_str event_status;
+    begin
+        for  i in 1..10000
+            loop
+                type_str := (select (array['CREATED', 'UPDATED', 'REMOVED'])[floor(random() * 3 + 1)]);
+                status_str := (select (array['DEFERRED', 'PROCESSED'])[floor(random() * 2 + 1)]);
+                insert into verification_events (
+                    verification_id,
+                    type,
+                    status,
+                    payload,
+                    updated_at
+                ) values (i,
+                          type_str,
+                          status_str,
+                          '{"verification_id": 1, "name": "SQL"}',
+                          now() - '2 years'::interval * random());
+            end loop;
+    end;
+$do$
