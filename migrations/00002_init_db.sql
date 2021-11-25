@@ -3,7 +3,7 @@ CREATE TYPE event_type AS ENUM ('CREATED', 'UPDATED', 'REMOVED');
 CREATE TYPE event_status AS ENUM ('DEFERRED', 'PROCESSED');
 
 CREATE TABLE verification_events (
-                                id BIGSERIAL PRIMARY KEY,
+                                event_id BIGSERIAL PRIMARY KEY,
                                 verification_id BIGSERIAL NOT NULL,
                                 type event_type NOT NULL,
                                 status event_status NOT NULL,

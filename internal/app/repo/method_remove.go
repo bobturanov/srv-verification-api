@@ -16,7 +16,7 @@ func (r repo) Remove(ctx context.Context, eventIDs []uint64) error {
 	query, args, err := squirrel.Update("verification_events").
 		PlaceholderFormat(squirrel.Dollar).
 		Set("status", model.Processed).
-		Where(squirrel.Eq{"id": eventIDs}).
+		Where(squirrel.Eq{"event_id": eventIDs}).
 		ToSql()
 
 	if err != nil {
