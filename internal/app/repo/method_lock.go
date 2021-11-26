@@ -33,21 +33,21 @@ func (r repo) Lock(ctx context.Context, n uint64) ([]model.VerificationEvent, er
 }
 
 func (r repo) convertToVerificationEventModel(n uint64, eventsData []struct {
-	EventId          uint64 `db:"event_id"`
-	EventType        model.EventType `db:"type"`
+	EventId          uint64            `db:"event_id"`
+	EventType        model.EventType   `db:"type"`
 	EventStatus      model.EventStatus `db:"status"`
-	VerificationId   uint64 `db:"id"`
-	VerificationName string `db:"name"`
+	VerificationId   uint64            `db:"id"`
+	VerificationName string            `db:"name"`
 }) []model.VerificationEvent {
 
 	events := make([]model.VerificationEvent, 0, n)
 
 	for _, event := range eventsData {
 		events = append(events, model.VerificationEvent{
-			ID:     event.EventId,
+			ID:             event.EventId,
 			VerificationID: event.VerificationId,
-			Type:   event.EventType,
-			Status: event.EventStatus,
+			Type:           event.EventType,
+			Status:         event.EventStatus,
 			Entity: &model.Verification{
 				ID:   event.VerificationId,
 				Name: event.VerificationName,
@@ -58,11 +58,11 @@ func (r repo) convertToVerificationEventModel(n uint64, eventsData []struct {
 }
 
 func (r repo) getEventsDataFromDB(ctx context.Context, err error, eventIds []uint64) ([]struct {
-	EventId          uint64 `db:"event_id"`
-	EventType        model.EventType `db:"type"`
+	EventId          uint64            `db:"event_id"`
+	EventType        model.EventType   `db:"type"`
 	EventStatus      model.EventStatus `db:"status"`
-	VerificationId   uint64 `db:"id"`
-	VerificationName string `db:"name"`
+	VerificationId   uint64            `db:"id"`
+	VerificationName string            `db:"name"`
 }, error) {
 
 	query, args, err := squirrel.Select("verification_events.event_id",
@@ -81,11 +81,11 @@ func (r repo) getEventsDataFromDB(ctx context.Context, err error, eventIds []uin
 	}
 
 	var eventsData []struct {
-		EventId          uint64 `db:"event_id"`
-		EventType        model.EventType `db:"type"`
+		EventId          uint64            `db:"event_id"`
+		EventType        model.EventType   `db:"type"`
 		EventStatus      model.EventStatus `db:"status"`
-		VerificationId   uint64 `db:"id"`
-		VerificationName string `db:"name"`
+		VerificationId   uint64            `db:"id"`
+		VerificationName string            `db:"name"`
 	}
 
 	err = r.db.SelectContext(ctx, &eventsData, query, args...)
