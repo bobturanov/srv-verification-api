@@ -7,6 +7,8 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+const producerPartitionerStrategy = -1
+
 type EventSender interface {
 	Send(verification *model.VerificationEvent) error
 }
@@ -52,7 +54,7 @@ func (ks *kafkaSender) Send(event *model.VerificationEvent) error {
 
 	msg := &sarama.ProducerMessage{
 		Topic:     ks.topic,
-		Partition: -1,
+		Partition: producerPartitionerStrategy,
 		Value:     sarama.ByteEncoder(message),
 	}
 	_, _, err = ks.producer.SendMessage(msg)

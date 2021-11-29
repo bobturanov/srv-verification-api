@@ -29,7 +29,7 @@ func NewEventConsumer(brokers []string, topic string, groupId string) (*kafkaRea
 	config.Consumer.Offsets.Initial = sarama.OffsetOldest
 	config.Consumer.Return.Errors = true
 
-	consumer, err := sarama.NewConsumerGroup(brokers, "consumer_group_1", config)
+	consumer, err := sarama.NewConsumerGroup(brokers, groupId, config)
 
 	return &kafkaReader{
 		consumer: consumer,
