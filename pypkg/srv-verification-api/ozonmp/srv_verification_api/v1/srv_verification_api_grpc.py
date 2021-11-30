@@ -33,6 +33,10 @@ class SrvVerificationApiServiceBase(abc.ABC):
     async def RemoveVerificationV1(self, stream: 'grpclib.server.Stream[ozonmp.srv_verification_api.v1.srv_verification_api_pb2.RemoveVerificationV1Request, ozonmp.srv_verification_api.v1.srv_verification_api_pb2.RemoveVerificationV1Response]') -> None:
         pass
 
+    @abc.abstractmethod
+    async def UpdateVerificationV1(self, stream: 'grpclib.server.Stream[ozonmp.srv_verification_api.v1.srv_verification_api_pb2.UpdateVerificationV1Request, ozonmp.srv_verification_api.v1.srv_verification_api_pb2.UpdateVerificationV1Response]') -> None:
+        pass
+
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
         return {
             '/ozonmp.srv_verification_api.v1.SrvVerificationApiService/DescribeVerificationV1': grpclib.const.Handler(
@@ -58,6 +62,12 @@ class SrvVerificationApiServiceBase(abc.ABC):
                 grpclib.const.Cardinality.UNARY_UNARY,
                 ozonmp.srv_verification_api.v1.srv_verification_api_pb2.RemoveVerificationV1Request,
                 ozonmp.srv_verification_api.v1.srv_verification_api_pb2.RemoveVerificationV1Response,
+            ),
+            '/ozonmp.srv_verification_api.v1.SrvVerificationApiService/UpdateVerificationV1': grpclib.const.Handler(
+                self.UpdateVerificationV1,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                ozonmp.srv_verification_api.v1.srv_verification_api_pb2.UpdateVerificationV1Request,
+                ozonmp.srv_verification_api.v1.srv_verification_api_pb2.UpdateVerificationV1Response,
             ),
         }
 
@@ -88,4 +98,10 @@ class SrvVerificationApiServiceStub:
             '/ozonmp.srv_verification_api.v1.SrvVerificationApiService/RemoveVerificationV1',
             ozonmp.srv_verification_api.v1.srv_verification_api_pb2.RemoveVerificationV1Request,
             ozonmp.srv_verification_api.v1.srv_verification_api_pb2.RemoveVerificationV1Response,
+        )
+        self.UpdateVerificationV1 = grpclib.client.UnaryUnaryMethod(
+            channel,
+            '/ozonmp.srv_verification_api.v1.SrvVerificationApiService/UpdateVerificationV1',
+            ozonmp.srv_verification_api.v1.srv_verification_api_pb2.UpdateVerificationV1Request,
+            ozonmp.srv_verification_api.v1.srv_verification_api_pb2.UpdateVerificationV1Response,
         )

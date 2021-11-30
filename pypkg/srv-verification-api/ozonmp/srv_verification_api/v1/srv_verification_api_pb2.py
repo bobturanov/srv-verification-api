@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'ZTgithub.com/ozonmp/srv-verification-api/pkg/srv-verification-api;srv_verification_api',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n9ozonmp/srv_verification_api/v1/srv_verification_api.proto\x12\x1eozonmp.srv_verification_api.v1\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa8\x01\n\x0cVerification\x12\x0e\n\x02id\x18\x01 \x01(\x04R\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12\x39\n\ncreated_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x39\n\nupdated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tupdatedAt\"Q\n\x1d\x44\x65scribeVerificationV1Request\x12\x30\n\x0fverification_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x0everificationId\"d\n\x1e\x44\x65scribeVerificationV1Response\x12\x42\n\x05value\x18\x01 \x01(\x0b\x32,.ozonmp.srv_verification_api.v1.VerificationR\x05value\"S\n\x1b\x43reateVerificationV1Request\x12\x34\n\x11verification_name\x18\x02 \x01(\tB\x07\xfa\x42\x04r\x02\x10\x02R\x10verificationName\"P\n\x1c\x43reateVerificationV1Response\x12\x30\n\x0fverification_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x0everificationId\"\x1b\n\x19ListVerificationV1Request\"n\n\x1aListVerificationV1Response\x12P\n\x0cverification\x18\x01 \x03(\x0b\x32,.ozonmp.srv_verification_api.v1.VerificationR\x0cverification\"O\n\x1bRemoveVerificationV1Request\x12\x30\n\x0fverification_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x0everificationId\"6\n\x1cRemoveVerificationV1Response\x12\x16\n\x06result\x18\x01 \x01(\x08R\x06result2\x91\x06\n\x19SrvVerificationApiService\x12\xc4\x01\n\x16\x44\x65scribeVerificationV1\x12=.ozonmp.srv_verification_api.v1.DescribeVerificationV1Request\x1a>.ozonmp.srv_verification_api.v1.DescribeVerificationV1Response\"+\x82\xd3\xe4\x93\x02%\x12#/v1/verifications/{verification_id}\x12\xb6\x01\n\x14\x43reateVerificationV1\x12;.ozonmp.srv_verification_api.v1.CreateVerificationV1Request\x1a<.ozonmp.srv_verification_api.v1.CreateVerificationV1Response\"#\x82\xd3\xe4\x93\x02\x1d\"\x18/v1/verifications/create:\x01*\x12\xab\x01\n\x12ListVerificationV1\x12\x39.ozonmp.srv_verification_api.v1.ListVerificationV1Request\x1a:.ozonmp.srv_verification_api.v1.ListVerificationV1Response\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/v1/verifications/list\x12\xc5\x01\n\x14RemoveVerificationV1\x12;.ozonmp.srv_verification_api.v1.RemoveVerificationV1Request\x1a<.ozonmp.srv_verification_api.v1.RemoveVerificationV1Response\"2\x82\xd3\xe4\x93\x02,**/v1/verifications/remove/{verification_id}BVZTgithub.com/ozonmp/srv-verification-api/pkg/srv-verification-api;srv_verification_apib\x06proto3'
+  serialized_pb=b'\n9ozonmp/srv_verification_api/v1/srv_verification_api.proto\x12\x1eozonmp.srv_verification_api.v1\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa8\x01\n\x0cVerification\x12\x0e\n\x02id\x18\x01 \x01(\x04R\x02id\x12\x12\n\x04name\x18\x02 \x01(\tR\x04name\x12\x39\n\ncreated_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x39\n\nupdated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tupdatedAt\"Q\n\x1d\x44\x65scribeVerificationV1Request\x12\x30\n\x0fverification_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x0everificationId\"d\n\x1e\x44\x65scribeVerificationV1Response\x12\x42\n\x05value\x18\x01 \x01(\x0b\x32,.ozonmp.srv_verification_api.v1.VerificationR\x05value\"S\n\x1b\x43reateVerificationV1Request\x12\x34\n\x11verification_name\x18\x02 \x01(\tB\x07\xfa\x42\x04r\x02\x10\x02R\x10verificationName\"P\n\x1c\x43reateVerificationV1Response\x12\x30\n\x0fverification_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x0everificationId\"\x1b\n\x19ListVerificationV1Request\"n\n\x1aListVerificationV1Response\x12P\n\x0cverification\x18\x01 \x03(\x0b\x32,.ozonmp.srv_verification_api.v1.VerificationR\x0cverification\"O\n\x1bRemoveVerificationV1Request\x12\x30\n\x0fverification_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x0everificationId\"6\n\x1cRemoveVerificationV1Response\x12\x16\n\x06result\x18\x01 \x01(\x08R\x06result\"n\n\x1bUpdateVerificationV1Request\x12\x30\n\x0fverification_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x0everificationId\x12\x1d\n\x04name\x18\x02 \x01(\tB\t\xfa\x42\x06r\x04\x10\x01\x18\x32R\x04name\"6\n\x1cUpdateVerificationV1Response\x12\x16\n\x06result\x18\x01 \x01(\x08R\x06result\"e\n\x12VerificationEntity\x12\x30\n\x0fverification_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x0everificationId\x12\x1d\n\x04name\x18\x02 \x01(\tB\t\xfa\x42\x06r\x04\x10\x01\x18\x32R\x04name\"\x82\x02\n\x11VerificationEvent\x12\x17\n\x02id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x02id\x12\x30\n\x0fverification_id\x18\x02 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x0everificationId\x12,\n\x0c\x65vent_status\x18\x04 \x01(\tB\t\xfa\x42\x06r\x04\x10\x01\x18\x32R\x0b\x65ventStatus\x12(\n\nevent_type\x18\x03 \x01(\tB\t\xfa\x42\x06r\x04\x10\x01\x18\x32R\teventType\x12J\n\x06\x65ntity\x18\x05 \x01(\x0b\x32\x32.ozonmp.srv_verification_api.v1.VerificationEntityR\x06\x65ntity2\xdd\x07\n\x19SrvVerificationApiService\x12\xc8\x01\n\x16\x44\x65scribeVerificationV1\x12=.ozonmp.srv_verification_api.v1.DescribeVerificationV1Request\x1a>.ozonmp.srv_verification_api.v1.DescribeVerificationV1Response\"/\x82\xd3\xe4\x93\x02)\x12\'/api/v1/verifications/{verification_id}\x12\xba\x01\n\x14\x43reateVerificationV1\x12;.ozonmp.srv_verification_api.v1.CreateVerificationV1Request\x1a<.ozonmp.srv_verification_api.v1.CreateVerificationV1Response\"\'\x82\xd3\xe4\x93\x02!\"\x1c/api/v1/verifications/create:\x01*\x12\xaf\x01\n\x12ListVerificationV1\x12\x39.ozonmp.srv_verification_api.v1.ListVerificationV1Request\x1a:.ozonmp.srv_verification_api.v1.ListVerificationV1Response\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/api/v1/verifications/list\x12\xc9\x01\n\x14RemoveVerificationV1\x12;.ozonmp.srv_verification_api.v1.RemoveVerificationV1Request\x1a<.ozonmp.srv_verification_api.v1.RemoveVerificationV1Response\"6\x82\xd3\xe4\x93\x02\x30*./api/v1/verifications/remove/{verification_id}\x12\xb9\x01\n\x14UpdateVerificationV1\x12;.ozonmp.srv_verification_api.v1.UpdateVerificationV1Request\x1a<.ozonmp.srv_verification_api.v1.UpdateVerificationV1Response\"&\x82\xd3\xe4\x93\x02 \"\x1b/api/v1/verification/update:\x01*BVZTgithub.com/ozonmp/srv-verification-api/pkg/srv-verification-api;srv_verification_apib\x06proto3'
   ,
   dependencies=[validate_dot_validate__pb2.DESCRIPTOR,google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -330,10 +330,181 @@ _REMOVEVERIFICATIONV1RESPONSE = _descriptor.Descriptor(
   serialized_end=980,
 )
 
+
+_UPDATEVERIFICATIONV1REQUEST = _descriptor.Descriptor(
+  name='UpdateVerificationV1Request',
+  full_name='ozonmp.srv_verification_api.v1.UpdateVerificationV1Request',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='verification_id', full_name='ozonmp.srv_verification_api.v1.UpdateVerificationV1Request.verification_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=b'\372B\0042\002 \000', json_name='verificationId', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='ozonmp.srv_verification_api.v1.UpdateVerificationV1Request.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=b'\372B\006r\004\020\001\0302', json_name='name', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=982,
+  serialized_end=1092,
+)
+
+
+_UPDATEVERIFICATIONV1RESPONSE = _descriptor.Descriptor(
+  name='UpdateVerificationV1Response',
+  full_name='ozonmp.srv_verification_api.v1.UpdateVerificationV1Response',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='result', full_name='ozonmp.srv_verification_api.v1.UpdateVerificationV1Response.result', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='result', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1094,
+  serialized_end=1148,
+)
+
+
+_VERIFICATIONENTITY = _descriptor.Descriptor(
+  name='VerificationEntity',
+  full_name='ozonmp.srv_verification_api.v1.VerificationEntity',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='verification_id', full_name='ozonmp.srv_verification_api.v1.VerificationEntity.verification_id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=b'\372B\0042\002 \000', json_name='verificationId', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='ozonmp.srv_verification_api.v1.VerificationEntity.name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=b'\372B\006r\004\020\001\0302', json_name='name', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1150,
+  serialized_end=1251,
+)
+
+
+_VERIFICATIONEVENT = _descriptor.Descriptor(
+  name='VerificationEvent',
+  full_name='ozonmp.srv_verification_api.v1.VerificationEvent',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='ozonmp.srv_verification_api.v1.VerificationEvent.id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=b'\372B\0042\002 \000', json_name='id', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='verification_id', full_name='ozonmp.srv_verification_api.v1.VerificationEvent.verification_id', index=1,
+      number=2, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=b'\372B\0042\002 \000', json_name='verificationId', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='event_status', full_name='ozonmp.srv_verification_api.v1.VerificationEvent.event_status', index=2,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=b'\372B\006r\004\020\001\0302', json_name='eventStatus', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='event_type', full_name='ozonmp.srv_verification_api.v1.VerificationEvent.event_type', index=3,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=b'\372B\006r\004\020\001\0302', json_name='eventType', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='entity', full_name='ozonmp.srv_verification_api.v1.VerificationEvent.entity', index=4,
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='entity', file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1254,
+  serialized_end=1512,
+)
+
 _VERIFICATION.fields_by_name['created_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _VERIFICATION.fields_by_name['updated_at'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _DESCRIBEVERIFICATIONV1RESPONSE.fields_by_name['value'].message_type = _VERIFICATION
 _LISTVERIFICATIONV1RESPONSE.fields_by_name['verification'].message_type = _VERIFICATION
+_VERIFICATIONEVENT.fields_by_name['entity'].message_type = _VERIFICATIONENTITY
 DESCRIPTOR.message_types_by_name['Verification'] = _VERIFICATION
 DESCRIPTOR.message_types_by_name['DescribeVerificationV1Request'] = _DESCRIBEVERIFICATIONV1REQUEST
 DESCRIPTOR.message_types_by_name['DescribeVerificationV1Response'] = _DESCRIBEVERIFICATIONV1RESPONSE
@@ -343,6 +514,10 @@ DESCRIPTOR.message_types_by_name['ListVerificationV1Request'] = _LISTVERIFICATIO
 DESCRIPTOR.message_types_by_name['ListVerificationV1Response'] = _LISTVERIFICATIONV1RESPONSE
 DESCRIPTOR.message_types_by_name['RemoveVerificationV1Request'] = _REMOVEVERIFICATIONV1REQUEST
 DESCRIPTOR.message_types_by_name['RemoveVerificationV1Response'] = _REMOVEVERIFICATIONV1RESPONSE
+DESCRIPTOR.message_types_by_name['UpdateVerificationV1Request'] = _UPDATEVERIFICATIONV1REQUEST
+DESCRIPTOR.message_types_by_name['UpdateVerificationV1Response'] = _UPDATEVERIFICATIONV1RESPONSE
+DESCRIPTOR.message_types_by_name['VerificationEntity'] = _VERIFICATIONENTITY
+DESCRIPTOR.message_types_by_name['VerificationEvent'] = _VERIFICATIONEVENT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Verification = _reflection.GeneratedProtocolMessageType('Verification', (_message.Message,), {
@@ -408,12 +583,48 @@ RemoveVerificationV1Response = _reflection.GeneratedProtocolMessageType('RemoveV
   })
 _sym_db.RegisterMessage(RemoveVerificationV1Response)
 
+UpdateVerificationV1Request = _reflection.GeneratedProtocolMessageType('UpdateVerificationV1Request', (_message.Message,), {
+  'DESCRIPTOR' : _UPDATEVERIFICATIONV1REQUEST,
+  '__module__' : 'ozonmp.srv_verification_api.v1.srv_verification_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.srv_verification_api.v1.UpdateVerificationV1Request)
+  })
+_sym_db.RegisterMessage(UpdateVerificationV1Request)
+
+UpdateVerificationV1Response = _reflection.GeneratedProtocolMessageType('UpdateVerificationV1Response', (_message.Message,), {
+  'DESCRIPTOR' : _UPDATEVERIFICATIONV1RESPONSE,
+  '__module__' : 'ozonmp.srv_verification_api.v1.srv_verification_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.srv_verification_api.v1.UpdateVerificationV1Response)
+  })
+_sym_db.RegisterMessage(UpdateVerificationV1Response)
+
+VerificationEntity = _reflection.GeneratedProtocolMessageType('VerificationEntity', (_message.Message,), {
+  'DESCRIPTOR' : _VERIFICATIONENTITY,
+  '__module__' : 'ozonmp.srv_verification_api.v1.srv_verification_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.srv_verification_api.v1.VerificationEntity)
+  })
+_sym_db.RegisterMessage(VerificationEntity)
+
+VerificationEvent = _reflection.GeneratedProtocolMessageType('VerificationEvent', (_message.Message,), {
+  'DESCRIPTOR' : _VERIFICATIONEVENT,
+  '__module__' : 'ozonmp.srv_verification_api.v1.srv_verification_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.srv_verification_api.v1.VerificationEvent)
+  })
+_sym_db.RegisterMessage(VerificationEvent)
+
 
 DESCRIPTOR._options = None
 _DESCRIBEVERIFICATIONV1REQUEST.fields_by_name['verification_id']._options = None
 _CREATEVERIFICATIONV1REQUEST.fields_by_name['verification_name']._options = None
 _CREATEVERIFICATIONV1RESPONSE.fields_by_name['verification_id']._options = None
 _REMOVEVERIFICATIONV1REQUEST.fields_by_name['verification_id']._options = None
+_UPDATEVERIFICATIONV1REQUEST.fields_by_name['verification_id']._options = None
+_UPDATEVERIFICATIONV1REQUEST.fields_by_name['name']._options = None
+_VERIFICATIONENTITY.fields_by_name['verification_id']._options = None
+_VERIFICATIONENTITY.fields_by_name['name']._options = None
+_VERIFICATIONEVENT.fields_by_name['id']._options = None
+_VERIFICATIONEVENT.fields_by_name['verification_id']._options = None
+_VERIFICATIONEVENT.fields_by_name['event_status']._options = None
+_VERIFICATIONEVENT.fields_by_name['event_type']._options = None
 
 _SRVVERIFICATIONAPISERVICE = _descriptor.ServiceDescriptor(
   name='SrvVerificationApiService',
@@ -422,8 +633,8 @@ _SRVVERIFICATIONAPISERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=983,
-  serialized_end=1768,
+  serialized_start=1515,
+  serialized_end=2504,
   methods=[
   _descriptor.MethodDescriptor(
     name='DescribeVerificationV1',
@@ -432,7 +643,7 @@ _SRVVERIFICATIONAPISERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_DESCRIBEVERIFICATIONV1REQUEST,
     output_type=_DESCRIBEVERIFICATIONV1RESPONSE,
-    serialized_options=b'\202\323\344\223\002%\022#/v1/verifications/{verification_id}',
+    serialized_options=b'\202\323\344\223\002)\022\'/api/v1/verifications/{verification_id}',
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
@@ -442,7 +653,7 @@ _SRVVERIFICATIONAPISERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_CREATEVERIFICATIONV1REQUEST,
     output_type=_CREATEVERIFICATIONV1RESPONSE,
-    serialized_options=b'\202\323\344\223\002\035\"\030/v1/verifications/create:\001*',
+    serialized_options=b'\202\323\344\223\002!\"\034/api/v1/verifications/create:\001*',
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
@@ -452,7 +663,7 @@ _SRVVERIFICATIONAPISERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_LISTVERIFICATIONV1REQUEST,
     output_type=_LISTVERIFICATIONV1RESPONSE,
-    serialized_options=b'\202\323\344\223\002\030\022\026/v1/verifications/list',
+    serialized_options=b'\202\323\344\223\002\034\022\032/api/v1/verifications/list',
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
@@ -462,7 +673,17 @@ _SRVVERIFICATIONAPISERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_REMOVEVERIFICATIONV1REQUEST,
     output_type=_REMOVEVERIFICATIONV1RESPONSE,
-    serialized_options=b'\202\323\344\223\002,**/v1/verifications/remove/{verification_id}',
+    serialized_options=b'\202\323\344\223\0020*./api/v1/verifications/remove/{verification_id}',
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='UpdateVerificationV1',
+    full_name='ozonmp.srv_verification_api.v1.SrvVerificationApiService.UpdateVerificationV1',
+    index=4,
+    containing_service=None,
+    input_type=_UPDATEVERIFICATIONV1REQUEST,
+    output_type=_UPDATEVERIFICATIONV1RESPONSE,
+    serialized_options=b'\202\323\344\223\002 \"\033/api/v1/verification/update:\001*',
     create_key=_descriptor._internal_create_key,
   ),
 ])

@@ -47,8 +47,10 @@ kafka:
   topic: "srv-verification-events"
   groupId: "srv-verification-api"
   brokers:
-    - "kafka:9092"
-    - "localhost:9094"
+    - "localhost:9095"
+    - "localhost:9096"
+#    - "kafka-1:9092"
+#    - "kafka-2:9092"
 
 telemetry:
   graylogPath: 127.0.0.1:12201

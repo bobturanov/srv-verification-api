@@ -718,3 +718,341 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RemoveVerificationV1ResponseValidationError{}
+
+// Validate checks the field values on UpdateVerificationV1Request with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *UpdateVerificationV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetVerificationId() <= 0 {
+		return UpdateVerificationV1RequestValidationError{
+			field:  "VerificationId",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	if l := utf8.RuneCountInString(m.GetName()); l < 1 || l > 50 {
+		return UpdateVerificationV1RequestValidationError{
+			field:  "Name",
+			reason: "value length must be between 1 and 50 runes, inclusive",
+		}
+	}
+
+	return nil
+}
+
+// UpdateVerificationV1RequestValidationError is the validation error returned
+// by UpdateVerificationV1Request.Validate if the designated constraints
+// aren't met.
+type UpdateVerificationV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateVerificationV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateVerificationV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateVerificationV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateVerificationV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateVerificationV1RequestValidationError) ErrorName() string {
+	return "UpdateVerificationV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateVerificationV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateVerificationV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateVerificationV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateVerificationV1RequestValidationError{}
+
+// Validate checks the field values on UpdateVerificationV1Response with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *UpdateVerificationV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Result
+
+	return nil
+}
+
+// UpdateVerificationV1ResponseValidationError is the validation error returned
+// by UpdateVerificationV1Response.Validate if the designated constraints
+// aren't met.
+type UpdateVerificationV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateVerificationV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateVerificationV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateVerificationV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateVerificationV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateVerificationV1ResponseValidationError) ErrorName() string {
+	return "UpdateVerificationV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateVerificationV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateVerificationV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateVerificationV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateVerificationV1ResponseValidationError{}
+
+// Validate checks the field values on VerificationEntity with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *VerificationEntity) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetVerificationId() <= 0 {
+		return VerificationEntityValidationError{
+			field:  "VerificationId",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	if l := utf8.RuneCountInString(m.GetName()); l < 1 || l > 50 {
+		return VerificationEntityValidationError{
+			field:  "Name",
+			reason: "value length must be between 1 and 50 runes, inclusive",
+		}
+	}
+
+	return nil
+}
+
+// VerificationEntityValidationError is the validation error returned by
+// VerificationEntity.Validate if the designated constraints aren't met.
+type VerificationEntityValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e VerificationEntityValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e VerificationEntityValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e VerificationEntityValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e VerificationEntityValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e VerificationEntityValidationError) ErrorName() string {
+	return "VerificationEntityValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e VerificationEntityValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sVerificationEntity.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = VerificationEntityValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = VerificationEntityValidationError{}
+
+// Validate checks the field values on VerificationEvent with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *VerificationEvent) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetId() <= 0 {
+		return VerificationEventValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	if m.GetVerificationId() <= 0 {
+		return VerificationEventValidationError{
+			field:  "VerificationId",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	if l := utf8.RuneCountInString(m.GetEventStatus()); l < 1 || l > 50 {
+		return VerificationEventValidationError{
+			field:  "EventStatus",
+			reason: "value length must be between 1 and 50 runes, inclusive",
+		}
+	}
+
+	if l := utf8.RuneCountInString(m.GetEventType()); l < 1 || l > 50 {
+		return VerificationEventValidationError{
+			field:  "EventType",
+			reason: "value length must be between 1 and 50 runes, inclusive",
+		}
+	}
+
+	if v, ok := interface{}(m.GetEntity()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return VerificationEventValidationError{
+				field:  "Entity",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// VerificationEventValidationError is the validation error returned by
+// VerificationEvent.Validate if the designated constraints aren't met.
+type VerificationEventValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e VerificationEventValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e VerificationEventValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e VerificationEventValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e VerificationEventValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e VerificationEventValidationError) ErrorName() string {
+	return "VerificationEventValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e VerificationEventValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sVerificationEvent.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = VerificationEventValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = VerificationEventValidationError{}

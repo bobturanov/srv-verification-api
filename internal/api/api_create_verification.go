@@ -29,7 +29,7 @@ func (o *verificationAPI) CreateVerificationV1(
 
 	verification := model.Verification{Name: req.VerificationName, CreatedAt: time.Now(), UpdatedAt: time.Now()}
 	if err := o.repo.AddVerification(ctx, &verification); err != nil {
-		logger.ErrorKV(ctx, "DescribeVerificationV1 -- failed", "err", err)
+		logger.ErrorKV(ctx, "CreateVerificationV1 -- failed", "err", err)
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}

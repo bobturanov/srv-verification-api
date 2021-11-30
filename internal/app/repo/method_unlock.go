@@ -17,7 +17,7 @@ func (r repo) Unlock(ctx context.Context, eventIDs []uint64) error {
 		PlaceholderFormat(squirrel.Dollar).
 		Set("status", model.Deferred).
 		Set("updated_at", "NOW()").
-		Where(squirrel.Eq{"id": eventIDs}).
+		Where(squirrel.Eq{"event_id": eventIDs}).
 		ToSql()
 
 	if err != nil {

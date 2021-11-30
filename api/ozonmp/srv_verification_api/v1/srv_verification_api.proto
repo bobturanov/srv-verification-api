@@ -33,6 +33,12 @@ service SrvVerificationApiService {
       delete: "/api/v1/verifications/remove/{verification_id}"
     };
   }
+  rpc UpdateVerificationV1(UpdateVerificationV1Request) returns (UpdateVerificationV1Response) {
+    option (google.api.http) = {
+      post: "/api/v1/verification/update"
+      body: "*"
+    };
+  }
 }
 
 message Verification {
@@ -73,3 +79,24 @@ message RemoveVerificationV1Response {
   bool result = 1;
 }
 
+message UpdateVerificationV1Request {
+  uint64 verification_id = 1 [(validate.rules).uint64.gt = 0];
+  string name = 2 [(validate.rules).string={ min_len: 1, max_len: 50 }];
+}
+
+message UpdateVerificationV1Response {
+  bool result = 1;
+}
+
+message VerificationEntity{
+  uint64 verification_id = 1 [(validate.rules).uint64.gt = 0];
+  string name = 2 [(validate.rules).string={ min_len: 1, max_len: 50 }];
+}
+
+message VerificationEvent {
+  uint64 id = 1 [(validate.rules).uint64.gt = 0];
+  uint64 verification_id = 2 [(validate.rules).uint64.gt = 0];
+  string event_status = 4 [(validate.rules).string={ min_len: 1, max_len: 50 }];
+  string event_type = 3 [(validate.rules).string={ min_len: 1, max_len: 50 }];
+  VerificationEntity entity = 5;
+}

@@ -33,20 +33,21 @@ func (r repo) Lock(ctx context.Context, n uint64) ([]model.VerificationEvent, er
 }
 
 func (r repo) convertToVerificationEventModel(n uint64, eventsData []struct {
-	EventId          uint64
-	EventType        model.EventType
-	EventStatus      model.EventStatus
-	VerificationId   uint64
-	VerificationName string
+	EventId          uint64            `db:"event_id"`
+	EventType        model.EventType   `db:"type"`
+	EventStatus      model.EventStatus `db:"status"`
+	VerificationId   uint64            `db:"id"`
+	VerificationName string            `db:"name"`
 }) []model.VerificationEvent {
 
 	events := make([]model.VerificationEvent, 0, n)
 
 	for _, event := range eventsData {
 		events = append(events, model.VerificationEvent{
-			ID:     event.EventId,
-			Type:   event.EventType,
-			Status: event.EventStatus,
+			ID:             event.EventId,
+			VerificationID: event.VerificationId,
+			Type:           event.EventType,
+			Status:         event.EventStatus,
 			Entity: &model.Verification{
 				ID:   event.VerificationId,
 				Name: event.VerificationName,
@@ -57,21 +58,22 @@ func (r repo) convertToVerificationEventModel(n uint64, eventsData []struct {
 }
 
 func (r repo) getEventsDataFromDB(ctx context.Context, err error, eventIds []uint64) ([]struct {
-	EventId          uint64
-	EventType        model.EventType
-	EventStatus      model.EventStatus
-	VerificationId   uint64
-	VerificationName string
+	EventId          uint64            `db:"event_id"`
+	EventType        model.EventType   `db:"type"`
+	EventStatus      model.EventStatus `db:"status"`
+	VerificationId   uint64            `db:"id"`
+	VerificationName string            `db:"name"`
 }, error) {
 
-	query, args, err := squirrel.Select("verification_events.id",
-		"verification_events.event_type",
-		"verification_events.event_status",
+	query, args, err := squirrel.Select("verification_events.event_id",
+		"verification_events.type",
+		"verification_events.status",
 		"verification.id",
 		"verification.name").
+		PlaceholderFormat(squirrel.Dollar).
 		Join("verification on verification.id = verification_events.verification_id").
 		From("verification_events").
-		Where(squirrel.Eq{"verification_events.id": eventIds}).
+		Where(squirrel.Eq{"verification_events.event_id": eventIds}).
 		ToSql()
 
 	if err != nil {
@@ -79,11 +81,11 @@ func (r repo) getEventsDataFromDB(ctx context.Context, err error, eventIds []uin
 	}
 
 	var eventsData []struct {
-		EventId          uint64
-		EventType        model.EventType
-		EventStatus      model.EventStatus
-		VerificationId   uint64
-		VerificationName string
+		EventId          uint64            `db:"event_id"`
+		EventType        model.EventType   `db:"type"`
+		EventStatus      model.EventStatus `db:"status"`
+		VerificationId   uint64            `db:"id"`
+		VerificationName string            `db:"name"`
 	}
 
 	err = r.db.SelectContext(ctx, &eventsData, query, args...)
@@ -96,12 +98,12 @@ func (r repo) getEventsDataFromDB(ctx context.Context, err error, eventIds []uin
 }
 
 func (r repo) getEventIdsFromDB(ctx context.Context, n uint64) ([]uint64, error) {
-	query, args, err := squirrel.Update("verification_events").
-		Set("event_status", model.Processed).
+	eventIds := make([]uint64, 0, n)
+	query, args, err := squirrel.Select("event_id").
+		From("verification_events").
 		PlaceholderFormat(squirrel.Dollar).
-		Where(squirrel.Eq{"event_status": model.Deferred}).
+		Where(squirrel.Eq{"status ": "DEFERRED"}).
 		Limit(n).
-		Suffix("RETURNING id").
 		ToSql()
 
 	if err != nil {
@@ -109,8 +111,20 @@ func (r repo) getEventIdsFromDB(ctx context.Context, n uint64) ([]uint64, error)
 		return nil, err
 	}
 
-	eventIds := make([]uint64, 0, n)
 	err = r.db.SelectContext(ctx, &eventIds, query, args...)
+
+	query, args, err = squirrel.Update("verification_events").
+		Set("status", model.Processed).
+		PlaceholderFormat(squirrel.Dollar).
+		Where(squirrel.Eq{"event_id ": eventIds}).
+		ToSql()
+
+	if err != nil {
+		logger.ErrorKV(ctx, "repo.getEventIdsFromDB() get select query", "err", err)
+		return nil, err
+	}
+
+	_, err = r.db.ExecContext(ctx, query, args...)
 
 	if err != nil {
 		logger.ErrorKV(ctx, "repo.getEventIdsFromDB() get result query", "err", err)
